@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: RevendTout
+    volumes:
+      - logistiquedb:/var/lib/postgresql/
+      - ./initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - logistique-net
+    ports:
+      - 5555:5432
+
+  api:
+    build:
+      dockerfile: ./LogistiqueGestion.API/Dockerfile
+      context: .
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:RevendTout=Server=db;database=RevendTout;uid=postgres;Pwd=password;Port=5432
+    networks:
+      - logistique-net
+    depends_on:
+      - db
+
+volumes:
+  logistiquedb:
+
+networks:
+  logistique-net:
