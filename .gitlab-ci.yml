@@ -1,9 +1,9 @@
 
 workflow:
   rules:
-    - if: $CI_COMMIT_MESSAGE =~ /feature/
+    - if: $CI_COMMIT_BRANCH =~ /feature/
       when: never
-    - if: $CI_COMMIT_BRANCH == "/projet_global/"
+    #- if: $CI_COMMIT_BRANCH == "/projet_global/"
 
 build-job:
 
