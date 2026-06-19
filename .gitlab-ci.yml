@@ -3,7 +3,7 @@ workflow:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /feature/
       when: never
-    #- if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_COMMIT_MESSAGE == "/projet_global/"
 
 build-job:
 
