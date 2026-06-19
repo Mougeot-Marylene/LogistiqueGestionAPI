@@ -4,7 +4,6 @@ workflow:
     - if: $CI_COMMIT_BRANCH =~ /feature/
       when: never
     - if: $CI_COMMIT_BRANCH =~ /projet_global/
-      #when: always
 
 build-job:
 
