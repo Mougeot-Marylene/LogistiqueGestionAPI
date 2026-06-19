@@ -1,7 +1,7 @@
 
 workflow:
   rules:
-    - if: $CI_COMMIT_MESSAGE =~ /-feature$/
+    - if: $CI_COMMIT_MESSAGE =~ /feature$/
       when: never
     - if: $CI_PIPELINE_SOURCE == "push"
 
