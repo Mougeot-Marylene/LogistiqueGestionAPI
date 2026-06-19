@@ -1,17 +1,9 @@
 
-job:
-  script: echo "Hello, Rules!"
+workflow:
   rules:
-    # Bloque le job si la branche actuelle commence par feature (en push normal)
-    - if: $CI_COMMIT_BRANCH =~ /^feature/
+    - if: $CI_COMMIT_MESSAGE =~ /-feature$/
       when: never
-
-    # Bloque aussi si c'est une Merge Request provenant d'une branche feature
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/
-      when: never
-
-    # Autorise le job pour tout le reste
-    - when: on_success
+    - if: $CI_PIPELINE_SOURCE == "push"
 
 build-job:
 
