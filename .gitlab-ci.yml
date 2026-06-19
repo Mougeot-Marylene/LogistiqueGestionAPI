@@ -1,3 +1,18 @@
+
+job:
+  script: echo "Hello, Rules!"
+  rules:
+    # Bloque le job si la branche actuelle commence par feature (en push normal)
+    - if: $CI_COMMIT_BRANCH =~ /^feature/
+      when: never
+
+    # Bloque aussi si c'est une Merge Request provenant d'une branche feature
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/
+      when: never
+
+    # Autorise le job pour tout le reste
+    - when: on_success
+
 build-job:
 
   stage: build
@@ -46,12 +61,4 @@ deploy-prod:
 
 
 
-job:
-  script: echo "Hello, Rules!"
-  rules:
-    # 1. Si ça commence par feature (ce qui englobe aussi feature/test), on ne lance JAMAIS
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/
-      when: never
-
-    # 2. Pour toutes les autres Merge Requests, on lance automatiquement
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+  
