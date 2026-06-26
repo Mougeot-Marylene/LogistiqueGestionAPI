@@ -1,51 +1,27 @@
 {
   "profiles": {
     "http": {
-      "commandName": "Project",
-      "launchUrl": "weatherforecast",
+      "commandName": "Project", // on est sur un projet (on veut compiler et lancer)
+      "launchBrowser": false, // mettre sur false -- est-ce qu'on veut lancer le navigateur et l'attaché
+      "launchUrl": "", // url lorsque l'on lance l'application
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5287"
-    },
-    "https": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7046;http://localhost:5287"
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
+      }, // comment on définit l'environnement quand on le lance (developpement, production..)
+      "dotnetRunMessages": true, // est-ce qu'on veut que dotnet affiche els message de build
+      "applicationUrl": "http://localhost:5287" // où est-ce que notre serveur va démarré, sur quel port
+    },    
+    
     "Container (Dockerfile)": {
       "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
+      "launchBrowser": false,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api",
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080"
       },
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": false
     }
   },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:1627",
-      "sslPort": 44388
-    }
-  }
+  "$schema": "http://json.schemastore.org/launchsettings.json"
 }
