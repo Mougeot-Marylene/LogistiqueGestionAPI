@@ -10,8 +10,8 @@ build-job:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:10.0
   script:
-    - dotnet restore GitlabCI.csproj
-    - dotnet build GitlabCI.csproj -c Release
+    - dotnet restore LogistiqueGestion.API.csproj
+    - dotnet build LogistiqueGestion.API.csproj -c Release
 
 
 test-job1:
