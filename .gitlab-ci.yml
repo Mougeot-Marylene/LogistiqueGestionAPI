@@ -44,15 +44,26 @@ test-job2:
     - sleep 20
 
 
-deploy-prod:
-
+docker-build:
   stage: deploy
-
+  image: quay.io/buildah/stable
+  variables:
+    # Use vfs with buildah. Docker offers overlayfs as a default, but Buildah
+    # cannot stack overlayfs on top of another overlayfs filesystem.
+    STORAGE_DRIVER: vfs
+    # Write all image metadata in the docker format, not the standard OCI format.
+    # Newer versions of docker can handle the OCI format, but older versions, like
+    # the one shipped with Fedora 30, cannot handle the format.
+    BUILDAH_FORMAT: docker
+    FQ_IMAGE_NAME: "$CI_REGISTRY_IMAGE"
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  #   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
-
-  environment: production
+    - buildah images
+    - buildah build -t $FQ_IMAGE_NAME -f LogistiqueGestion.API/Dockerfile .
+    - buildah images
+    - buildah push $FQ_IMAGE_NAME
 
 
   
