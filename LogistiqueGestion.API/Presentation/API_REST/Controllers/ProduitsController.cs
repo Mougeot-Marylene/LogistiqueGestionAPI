@@ -9,9 +9,9 @@ namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 
 public class ProduitsController : APIBaseController
 {
-    private readonly ILogistiqueService _logistiqueService;
+    private readonly IProduitService _logistiqueService;
 
-    public ProduitsController(ILogistiqueService logistiqueService)
+    public ProduitsController(IProduitService logistiqueService)
     {
         _logistiqueService = logistiqueService;
     }
@@ -56,7 +56,6 @@ public class ProduitsController : APIBaseController
             Produit produit = new Produit()
             {
                 Id = id,
-                Nom = request.Nom,
                 Quantite = request.Quantite
             };
 
@@ -67,7 +66,6 @@ public class ProduitsController : APIBaseController
             UpdateProduitDTOResponse response = new()
             {
                 Id = produitModifie.Id,
-                Nom = produitModifie.Nom,
                 Quantite = produitModifie.Quantite,
             };
 

@@ -14,21 +14,17 @@ public class Session : ISession
 {
     public IDbConnection Connection { get; private set; }
 
-    public Session(IConfiguration configuration)
+    private EDBType edbType;
+    public EDBType EDBType => edbType;
+
+    private IDbTransaction _transacation;
+    public IDbTransaction TransactionSql { get => _transacation; set => _transacation = value; }
+
+    public Session(String connectionString, EDBType eDBType)
     {
-        var connectionString = configuration.GetValue<string>("ConnectionDB");
-        if (connectionString is null)
-        {
-            throw new Exception("La propriété ConnectionDB doit être définie dans appsettings.json");
-        }
+        edbType = eDBType;
 
-        var edbType = configuration.GetValue<EDBType?>("TypeDB");
-        if (edbType is null)
-        {
-            throw new Exception("La propriété TypeDB doit être définie dans appsettings.json");
-        }
-
-        switch (edbType)
+        switch (eDBType)
         {
             case EDBType.POSTGRESQL:
                 Connection = new NpgsqlConnection(connectionString);

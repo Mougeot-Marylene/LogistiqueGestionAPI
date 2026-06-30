@@ -1,5 +1,7 @@
 using LogistiqueGestion.API.DAL;
 using LogistiqueGestion.API.Services;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 
 namespace LogistiqueGestion.API
@@ -12,11 +14,19 @@ namespace LogistiqueGestion.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             // Ajoute nos controller à l'interrieur
             builder.Services.AddControllers();
             builder.Services.AddBLL();
-            builder.Services.AddDAL();
+
+            builder.Services.AddDAL((DALOptions options) =>
+            {
+                var connectionString = builder.Configuration.GetValue<string>("ConnectionDB");
+                var edbType = builder.Configuration.GetValue<EDBType?>("TypeDB");
+
+                options.ConnectionString = connectionString;
+                options.typeDB = edbType;
+                ;
+            });
 
             var app = builder.Build();
 

@@ -2,7 +2,7 @@
 
 namespace LogistiqueGestion.API.Services.Interfaces;
 
-public interface ILogistiqueService
+public interface IProduitService
 {
     /// <summary>
     /// Récupèrer tous les produits pour l'inventaire
