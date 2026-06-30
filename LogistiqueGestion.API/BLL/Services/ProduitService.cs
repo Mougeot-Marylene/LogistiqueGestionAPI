@@ -21,9 +21,13 @@ public class ProduitService : IProduitService
 
     public async Task<Produit> ModifierStockProduit(Produit produit)
     {
+        if (produit is null)
+        {
+            throw new ArgumentNullException("Pas de produit avec cet Id");
+        }
         if (produit.Id <= 0)
         {
-            throw new ArgumentNullException("Récupère un id de produit valide");
+            throw new ArgumentNullException("Récupèrer un id de produit valide");
         }
         if (produit.Quantite <= 0)
         {
@@ -41,4 +45,15 @@ public class ProduitService : IProduitService
 
         return produitFind;
     }
+
+    public async Task<Produit> AddProductkAsync(Produit produit)
+    {
+        _db.BeginTransaction();
+        var newBook = await _db.Produits.AddAsync(produit);
+
+        _db.Commit();
+
+        return newBook;
+    }
+
 }

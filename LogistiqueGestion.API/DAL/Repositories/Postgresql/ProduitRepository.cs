@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using Domain.Domaine.Entities;
-using LogistiqueGestion.API.DAL.Repositories.Commons.Interfaces;
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
-using LogistiqueGestion.API.Domain.Entities;
 using LogistiqueGestion.API.Domain.Exceptions;
 
 namespace LogistiqueGestion.API.DAL.Repositories.Postgresql;
@@ -14,6 +12,32 @@ public class ProduitRepositoryPostgresql : IProduitRepository
     public ProduitRepositoryPostgresql(ISession session)
     {
         _db = session;
+    }
+
+    public async Task<Produit> AddAsync(Produit entity)
+    {
+        string query = @"INSERT INTO produits (Nom, Description,Prix,Quantite)
+                          VALUES (@Nom, @Description, @Prix, @Quantite);";
+
+        var parameters = new { 
+            Nom = entity.Nom,
+            Description = entity.Description,
+            Prix = entity.Prix,
+            Quantite = entity.Quantite,        
+        };
+
+        try
+        {
+            int res = await _db.Connection.ExecuteAsync(query, new { entity = entity });
+            entity.Id = res;
+            return entity;
+        }
+        catch (Exception)
+        {
+
+            throw new InsertEntityException(entity);
+        }
+       
     }
 
     public async Task<IEnumerable<Produit>> GetAllAsync()
@@ -42,12 +66,6 @@ public class ProduitRepositoryPostgresql : IProduitRepository
 
         return entity;
     }
-
-    public Task<Produit> CreateAsync(Produit entity)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task DeleteAsync(int id)
     {
         throw new NotImplementedException();

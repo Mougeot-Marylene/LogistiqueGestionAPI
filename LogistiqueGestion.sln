@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "�
 		.gitlab-ci.yml = .gitlab-ci.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUnitaires", "ProduitsTU\TestUnitaires.csproj", "{DAB363BF-184D-4308-BE8A-C9412EDFCF9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{BCC943DA-AECB-42C2-A8F7-0D03686ED05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCC943DA-AECB-42C2-A8F7-0D03686ED05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCC943DA-AECB-42C2-A8F7-0D03686ED05F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB363BF-184D-4308-BE8A-C9412EDFCF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB363BF-184D-4308-BE8A-C9412EDFCF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB363BF-184D-4308-BE8A-C9412EDFCF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB363BF-184D-4308-BE8A-C9412EDFCF9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

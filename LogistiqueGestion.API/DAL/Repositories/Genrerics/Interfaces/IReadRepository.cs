@@ -6,6 +6,7 @@ namespace LogistiqueGestion.API.DAL.Repositories.Commons.Interfaces;
 // Interface génériques 
 public interface IReadRepository<E, Pk> where E : Entity 
 {
+   
     /* Select *
          * On utilise IEnumerable car on c'est pas si on renvoit une liste ou autre
          * Entity(type entitée) est un générique, on l'utilise quand on ne sait pas : IEnumerable de quoi => ?

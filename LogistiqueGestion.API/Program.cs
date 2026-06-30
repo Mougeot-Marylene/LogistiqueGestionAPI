@@ -1,9 +1,8 @@
 using LogistiqueGestion.API.DAL;
 using LogistiqueGestion.API.Services;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
+using System.Runtime.CompilerServices;
 
-
+[assembly:InternalsVisibleTo("TestUnitaires")] // permet au test unitaire des voir les class internes (pour faire les test)
 namespace LogistiqueGestion.API
 {
     public class Program
