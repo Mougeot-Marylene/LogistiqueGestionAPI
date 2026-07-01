@@ -41,9 +41,9 @@ public class ProduitService : IProduitService
             throw new Exception("Pas de produit avec cet Id");
         }
 
-        await _db.Produits.Update(produit);
+        Produit produitUpdate = await _db.Produits.Update(produit);
 
-        return produitFind;
+        return produitUpdate;
     }
 
     public async Task<Produit> AddProductkAsync(Produit produit)
