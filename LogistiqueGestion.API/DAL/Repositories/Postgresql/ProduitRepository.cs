@@ -42,7 +42,7 @@ public class ProduitRepositoryPostgresql : IProduitRepository
 
     public async Task<IEnumerable<Produit>> GetAllAsync()
     {
-        var query = @"select p.nom, p.quantite , p.prix , p.description, pc.categorie_id, c.nom   
+        var query = @"select p.id, p.nom, p.quantite , p.prix , p.description, pc.categorie_id, c.id, c.nom, c.description  
                         from produits p 
                       inner join produit_categories pc ON p.id  = pc.produit_id 
                       inner join categories c on c.id = pc.categorie_id ;";
