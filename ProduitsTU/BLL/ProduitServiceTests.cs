@@ -39,6 +39,29 @@ public class ProduitServiceTests
     public async void ModifierStockProduit_WithIdLessThanOrEqualToZero_Should_Be_ThrowException()
     {
         //Arrange (Préparation)
+        List<Categorie> categories = new List<Categorie>
+        {
+            new Categorie
+            {
+                Id = 1,
+                Nom = "Homme",
+                Description = "La catégorie Homme propose des vêtements variés alliant confort et style."
+            },
+            new Categorie
+            {
+                Id = 2,
+                Nom = "Femme",
+                Description = "La catégorie Femme regroupe le prêt-à-porter féminin, des robes aux vêtements de sport."
+            },
+            new Categorie
+            {
+                Id = 3,
+                Nom = "Enfant",
+                Description = "Des vêtements confortables et résistants pour les plus petits."
+            } // Pas de virgule sur le dernier élément
+        };
+
+
         Produit produit = new Produit  // ← Crée un produit de test
         {
             Id = -1,  // ← ID = -1 (cas d'erreur)
@@ -46,7 +69,7 @@ public class ProduitServiceTests
             Description = "testDescription",
             Prix = 10.2m,
             Quantite = 5,
-            Categorie = 2
+            Categorie = categories[2]
         };
 
         IUOW uOWDummy = Mock.Of<IUOW>();  // ← Mock vide (on ne l'utilisera pas car l'exception sera levée avant)
@@ -64,6 +87,27 @@ public class ProduitServiceTests
     public async void ModifierStockProduit_WithQuantityLessThanOrEqualToZero_Should_Be_ThrowException()
     {
         //Arrange (Préparation)
+        List<Categorie> categories = new List<Categorie>
+        {
+            new Categorie
+            {
+                Id = 1,
+                Nom = "Homme",
+                Description = "La catégorie Homme propose des vêtements variés alliant confort et style."
+            },
+            new Categorie
+            {
+                Id = 2,
+                Nom = "Femme",
+                Description = "La catégorie Femme regroupe le prêt-à-porter féminin, des robes aux vêtements de sport."
+            },
+            new Categorie
+            {
+                Id = 3,
+                Nom = "Enfant",
+                Description = "Des vêtements confortables et résistants pour les plus petits."
+            } // Pas de virgule sur le dernier élément
+        };
         Produit produit = new Produit  // ← Crée un produit de test
         {
             Id = 1,
@@ -71,7 +115,7 @@ public class ProduitServiceTests
             Description = "testDescription",
             Prix = 10.2m,
             Quantite = 0,  // ← Quantité = 0 (cas d'erreur)
-            Categorie = 2
+            Categorie = categories[1]
         };
 
         IUOW uOWDummy = Mock.Of<IUOW>();  // ← Mock vide (on ne l'utilisera pas car l'exception sera levée avant)

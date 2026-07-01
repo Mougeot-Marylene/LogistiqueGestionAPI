@@ -15,7 +15,28 @@ public class ProduitControllerTests
     [Fact]
     public async Task RecupProduits_should_be_return_all_products()
     {
-        // Arange
+        //Arrange (Préparation)
+        List<Categorie> categories = new List<Categorie>
+        {
+            new Categorie
+            {
+                Id = 1,
+                Nom = "Homme",
+                Description = "La catégorie Homme propose des vêtements variés alliant confort et style."
+            },
+            new Categorie
+            {
+                Id = 2,
+                Nom = "Femme",
+                Description = "La catégorie Femme regroupe le prêt-à-porter féminin, des robes aux vêtements de sport."
+            },
+            new Categorie
+            {
+                Id = 3,
+                Nom = "Enfant",
+                Description = "Des vêtements confortables et résistants pour les plus petits."
+            } // Pas de virgule sur le dernier élément
+        };
         List<Produit> produits = new List<Produit>()
         {
             new()
@@ -25,7 +46,7 @@ public class ProduitControllerTests
                 Quantite = 1,
                 Description = "testDesc1",
                 Prix = 5,
-                Categorie = 1,
+                Categorie = categories[1],
             },
             new()
             {
@@ -34,7 +55,7 @@ public class ProduitControllerTests
                 Quantite = 2,
                 Description = "testDesc2",
                 Prix = 5,
-                Categorie = 1,
+                Categorie = categories[1],
             },
             new()
             {
@@ -43,7 +64,7 @@ public class ProduitControllerTests
                 Quantite = 3,
                 Description = "testDesc3",
                 Prix = 5,
-                Categorie = 1,
+                Categorie = categories[2],
             }
 
         };
