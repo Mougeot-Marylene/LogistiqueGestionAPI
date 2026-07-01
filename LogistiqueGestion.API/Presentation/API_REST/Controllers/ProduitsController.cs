@@ -39,7 +39,7 @@ public class ProduitsController : APIBaseController
         };
 
         //DTO Reponse + code HTTP 200
-        return Ok(produits);
+        return Ok(response);
     }
 
     [HttpPut("{id}")]
