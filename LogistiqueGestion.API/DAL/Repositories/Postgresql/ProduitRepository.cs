@@ -42,10 +42,30 @@ public class ProduitRepositoryPostgresql : IProduitRepository
 
     public async Task<IEnumerable<Produit>> GetAllAsync()
     {
-        var query = "SELECT * FROM produits";
+        var query = @"select p.nom, p.quantite , p.prix , p.description, pc.categorie_id, c.nom   
+                        from produits p 
+                      inner join produit_categories pc ON p.id  = pc.produit_id 
+                      inner join categories c on c.id = pc.categorie_id ;";
 
-        return await _db.Connection.QueryAsync<Produit>(query, transaction: _db.TransactionSql);
+        var result = await _db.Connection.QueryAsync<Produit, Categorie, Produit>(
+            query,
+            (p, c) => { p.Categorie = c; return p; },
+            transaction: _db.TransactionSql,
+            splitOn: "categorie_id");
+
+        // On vérifie si la collection est vide (plutôt que de prendre le premier)
+        if (result == null || !result.Any())
+        {
+            //  retourne une liste vide (souvent préférable pour un GetAll)
+            return Enumerable.Empty<Produit>();
+        }
+
+        //  On retourne TOUTE la liste d'un coup, sans conversion forcée
+        return result;
     }
+
+
+
 
     public async Task<Produit> GetAsync(int id)
     {

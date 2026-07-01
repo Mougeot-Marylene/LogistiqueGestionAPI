@@ -1,6 +1,5 @@
 ﻿using Domain.Domaine.Entities;
 using LogistiqueGestion.API.DAL;
-using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Services.Interfaces;
 
 namespace LogistiqueGestion.API.Services;
@@ -13,13 +12,13 @@ public class ProduitService : IProduitService
         _db = db;
     }
 
-    public async Task<IEnumerable<Produit>> RecupProduits()
+    public async Task<IEnumerable<Produit>> GetProductsAsync()
     {
         return await _db.Produits.GetAllAsync();
     }
     
 
-    public async Task<Produit> ModifierStockProduit(Produit produit)
+    public async Task<Produit> UpdateProductAsync(Produit produit)
     {
         if (produit is null)
         {
@@ -46,7 +45,7 @@ public class ProduitService : IProduitService
         return produitUpdate;
     }
 
-    public async Task<Produit> AddProductkAsync(Produit produit)
+    public async Task<Produit> AddProductAsync(Produit produit)
     {
         _db.BeginTransaction();
         var newBook = await _db.Produits.AddAsync(produit);

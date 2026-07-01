@@ -5,6 +5,7 @@ namespace LogistiqueGestion.API.DAL;
 public interface IUOW
 {
     public IProduitRepository Produits { get; }
+    public ICategorieRepository Categories { get; }
 
     /// <summary>
     /// Démarre une transaction

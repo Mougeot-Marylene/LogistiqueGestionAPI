@@ -1,4 +1,6 @@
-﻿namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
+﻿using Domain.Domaine.Entities;
+
+namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
 
 public class GetProduitsDTOResponse
 {
@@ -12,5 +14,5 @@ public class GetProduitsItemDTOResponse
     public int Quantite { get; set; }
     public string Description { get; set; }
     public decimal Prix { get; set; }
-    public int Categorie { get; set; }
+    public Categorie Categorie { get; set; }
 }

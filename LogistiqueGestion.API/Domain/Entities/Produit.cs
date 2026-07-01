@@ -30,8 +30,8 @@ public class Produit : Entity
     public decimal Prix { get; set; }
 
     /// <summary>
-    /// Categorie du produit
+    /// ProduitCategorie du produit
     /// </summary>
-    public int Categorie { get; set; }
+    public Categorie Categorie { get; set; }
 
 }

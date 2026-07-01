@@ -11,7 +11,7 @@ namespace TestUnitaires.BLL;
 
 public class ProduitServiceTests
 {
-    // Task<Produit> ModifierStockProduit(Produit produit)
+    // Task<Produit> UpdateProductAsync(Produit produit)
 
     /// <summary>
     ///  Null => exception (ArgumentNullException)
@@ -28,8 +28,8 @@ public class ProduitServiceTests
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
         //Act + Assert (Exécution + Vérification)
-        // ← Vérifie que ModifierStockProduit lève une ArgumentNullException quand le produit est null
-        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ModifierStockProduit(produit));
+        // ← Vérifie que UpdateProductAsync lève une ArgumentNullException quand le produit est null
+        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateProductAsync(produit));
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public class ProduitServiceTests
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
         //Act + Assert (Exécution + Vérification)
-        // ← Vérifie que ModifierStockProduit lève une ArgumentNullException
-        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ModifierStockProduit(produit));
+        // ← Vérifie que UpdateProductAsync lève une ArgumentNullException
+        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateProductAsync(produit));
     }
 
     /// <summary>
@@ -78,8 +78,8 @@ public class ProduitServiceTests
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
         //Act + Assert (Exécution + Vérification)
-        // ← Vérifie que ModifierStockProduit lève une ArgumentNullException
-        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ModifierStockProduit(produit));
+        // ← Vérifie que UpdateProductAsync lève une ArgumentNullException
+        await Assert.ThrowsAsync<ArgumentNullException>(() => sut.UpdateProductAsync(produit));
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class ProduitServiceTests
         var result = new ProduitService(uow);  // ← Crée le service avec le mock
 
         //Act (Exécution)
-        Produit actualResultProduit = await result.ModifierStockProduit(produit);  // ← Appelle la méthode à tester
+        Produit actualResultProduit = await result.UpdateProductAsync(produit);  // ← Appelle la méthode à tester
 
         //Assert (Vérification)
         Mock.Get(produitRepositoryMock).Verify();  // ← Vérifie que Update a été appelé une fois

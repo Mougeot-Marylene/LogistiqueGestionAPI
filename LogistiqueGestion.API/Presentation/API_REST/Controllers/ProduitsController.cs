@@ -9,18 +9,18 @@ namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 
 public class ProduitsController : APIBaseController
 {
-    private readonly IProduitService _logistiqueService;
+    private readonly IProduitService _produitService;
 
     public ProduitsController(IProduitService logistiqueService)
     {
-        _logistiqueService = logistiqueService;
+        _produitService = logistiqueService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> RecupProduits()
+    public async Task<IActionResult> GetAll()
     {
         //Appel de la logique métier
-        IEnumerable<Produit> produits = await _logistiqueService.RecupProduits();
+        IEnumerable<Produit> produits = await _produitService.GetProductsAsync();
 
         //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)
        var items = produits.Select(produits => new GetProduitsItemDTOResponse() 
@@ -43,7 +43,7 @@ public class ProduitsController : APIBaseController
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> ModifierProduit([FromRoute] int id, [FromBody] UpdateProduitDTORequest request)
+    public async Task<IActionResult> UpdateProduit([FromRoute] int id, [FromBody] UpdateProduitDTORequest request)
     {
         try
         {
@@ -60,7 +60,7 @@ public class ProduitsController : APIBaseController
             };
 
             //Appel de la logique 
-            var produitModifie = await _logistiqueService.ModifierStockProduit(produit);
+            var produitModifie = await _produitService.UpdateProductAsync(produit);
 
             //BO(s) -> DTO Reponse
             UpdateProduitDTOResponse response = new()

@@ -52,7 +52,7 @@ public class ProduitControllerTests
         IProduitService produitServiceMock = Mock.Of<IProduitService>();
 
         Mock.Get(produitServiceMock)
-            .Setup(service => service.RecupProduits()) // Configure le mock : quand RecupProduits() est appelée...
+            .Setup(service => service.GetProductsAsync()) // Configure le mock : quand GetProductsAsync() est appelée...
             .ReturnsAsync(produits) // ...elle retourne la liste "produits"
             .Verifiable(Times.Once); // verifie qu'il appel au moins une fois
 
@@ -96,7 +96,7 @@ public class ProduitControllerTests
 
         // Act
         // Appel de la méthode du contrôleur à tester
-        IActionResult actionResult = await sut.RecupProduits();
+        IActionResult actionResult = await sut.GetAll();
 
         // Assert
         Mock.Get(produitServiceMock).Verify(); //spi vérification (vérifie que le mock a bien été appelé 1 fois)

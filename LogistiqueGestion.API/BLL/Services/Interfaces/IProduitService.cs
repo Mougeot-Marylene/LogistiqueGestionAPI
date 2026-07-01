@@ -8,7 +8,7 @@ public interface IProduitService
     /// Récupèrer tous les produits pour l'inventaire
     /// </summary>
     /// <returns>Tous les produits</returns>
-    public Task<IEnumerable<Produit>> RecupProduits();
+    public Task<IEnumerable<Produit>> GetProductsAsync();
 
     /// <summary>
     /// Modifier mon produit pour l'augmentation de stock 
@@ -17,6 +17,6 @@ public interface IProduitService
     /// <param name="nom">Nom du produit</param>
     /// <param name="quantite">Nombre de quantité du produit</param>
     /// <returns>Produit modifié</returns>
-    public Task<Produit> ModifierStockProduit(Produit produit);
+    public Task<Produit> UpdateProductAsync(Produit produit);
 
 }

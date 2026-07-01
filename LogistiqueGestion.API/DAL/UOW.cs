@@ -5,15 +5,18 @@ namespace LogistiqueGestion.API.DAL;
 
 public class UOW : IUOW
 {
+    private readonly ISession _session;
+
+    private readonly Dictionary<Type, object> CurrrentDictionnary;
+
     /*
      * CurrrentDictionnary.GetValueOrDefault(typeof(IProduitRepository) => on récupère le type dans le dictionnaire
      * On appelle le constructeur avec ce paramètre : new object[] {_session})
      */
     public IProduitRepository Produits => CurrrentDictionnary.GetValueOrDefault(typeof(IProduitRepository)) as IProduitRepository;
 
-    private readonly ISession _session;
+    public ICategorieRepository Categories => CurrrentDictionnary.GetValueOrDefault(typeof(ICategorieRepository)) as ICategorieRepository;
 
-    private readonly Dictionary<Type, object> CurrrentDictionnary;
 
     public UOW(String connectionString, EDBType eDBType)
     {
@@ -23,7 +26,8 @@ public class UOW : IUOW
         {
             case EDBType.POSTGRESQL: 
                 CurrrentDictionnary = new Dictionary<Type, object> {
-                    {typeof(IProduitRepository), new ProduitRepositoryPostgresql(_session) }
+                    {typeof(IProduitRepository), new ProduitRepositoryPostgresql(_session) },
+                     {typeof(ICategorieRepository), new CategorieRepositoryPostgresql(_session) }
                 };
                 break;
         }

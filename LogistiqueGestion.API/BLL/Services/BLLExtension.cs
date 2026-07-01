@@ -8,5 +8,6 @@ public static class BLLExtension
     {
         // Enregistrement de tous els services de la logique métier
         services.AddTransient<IProduitService, ProduitService>();
+        services.AddTransient<ICategorieService, CategorieService>();
     }
 }
