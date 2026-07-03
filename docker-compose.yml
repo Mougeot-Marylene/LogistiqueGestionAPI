@@ -14,9 +14,10 @@ services:
       - 5555:5432
 
   api:
-    build:
-      dockerfile: ./LogistiqueGestion.API/Dockerfile
-      context: .
+    # build:
+    #   dockerfile: ./LogistiqueGestion.API/Dockerfile
+    #   context: .
+    image: registry.gitlab-formation.2isa.eu/mmougeo/cda11-mougeot_marylene-fr-jalon_2_logistiquegestionapi
     ports:
       - 8080:8080
     environment:
