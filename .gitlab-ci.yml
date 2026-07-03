@@ -12,27 +12,17 @@ variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest  
 
+image: mcr.microsoft.com/dotnet/sdk:10.0
+
 build-job:
   stage: build
-  image: mcr.microsoft.com/dotnet/sdk:10.0
+  
   script:
     - dotnet restore LogistiqueGestion.API/LogistiqueGestion.API.csproj
     - dotnet build LogistiqueGestion.API/LogistiqueGestion.API.csproj -c Release
 
-
-test-job1:
-
+test-job:
   stage: test
-
-  script:
-
-    - echo "This job tests something"
-
-
-test-job2:
-
-  stage: test
-
   script:
 
     - dotnet test
