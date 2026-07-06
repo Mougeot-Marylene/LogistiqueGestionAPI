@@ -15,6 +15,7 @@ public class APIFactory : WebApplicationFactory<Program>
         {
             var configRoot = new ConfigurationBuilder()
              .AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.Integrations.json"))
+             .AddEnvironmentVariables()
              .Build();
 
             configService.AddConfiguration(configRoot);
