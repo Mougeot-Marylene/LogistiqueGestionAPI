@@ -20,6 +20,9 @@ variables:
   POSTGRES_PASSWORD: password
   POSTGRES_HOST_AUTH_METHOD: trust
 
+  ConnectionDB: "Server=postgres;Port=5432;Database=RevendToutTEST;User Id=postgres;Password=password;"
+  TypeDB: "POSTGRESQL"
+
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
 build-job:
