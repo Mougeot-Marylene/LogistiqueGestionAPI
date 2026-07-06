@@ -1,21 +1,26 @@
 ﻿
 using LogistiqueGestion.API;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace TestIntegration.Fixtrures;
 
 
 public class APIFactory : WebApplicationFactory<Program>
 {
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    protected override IHost CreateHost(IHostBuilder builder)
     {
-        base.ConfigureWebHost(builder);
-
-        builder.ConfigureAppConfiguration((conf) =>
+        builder.ConfigureHostConfiguration(configService =>
         {
-            conf.AddJsonFile("appsettings.Integrations.json");
+            var configRoot = new ConfigurationBuilder()
+             .AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.Integrations.json"))
+             .Build();
+
+            configService.AddConfiguration(configRoot);
+
         });
+
+        return base.CreateHost(builder);
     }
 }

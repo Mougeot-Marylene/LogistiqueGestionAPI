@@ -3,6 +3,7 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using System.Text;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace TestIntegration.Fixtrures;
@@ -53,13 +54,15 @@ public class FixtureIntegration: IClassFixture<APIFactory>
 	//logout
 	public async Task Logout() => _httpClient.DefaultRequestHeaders.Authorization = null;
 
-	//Up.Database
+	//Up.Database (recréer bdd)
 	public async Task UpDB()
 	{
 		await DownBD();
         var configService = aPIFactory.Server.Services.GetRequiredService<IConfiguration>();
         string stringConnection = configService.GetValue<string>("ConnectionDB");
-        string query = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "CreateDB.sql"));
+        string query = File.ReadAllText(
+    Path.Combine(AppContext.BaseDirectory, "CreateDB.sql"),
+    Encoding.UTF8);
         using (var con = new NpgsqlConnection(stringConnection))
         {
             con.Open();
@@ -68,12 +71,12 @@ public class FixtureIntegration: IClassFixture<APIFactory>
         }
     }
 
-	//DownDatabase
+	//DownDatabase (efface BDD)
 	public async Task DownBD()
 	{
 		var configService = aPIFactory.Server.Services.GetRequiredService<IConfiguration>();
 		string stringConnection = configService.GetValue<string>("ConnectionDB");
-		string query = "DROP SCHEMA public";
+		string query = "DROP SCHEMA if exists public CASCADE";
 		using(var con = new NpgsqlConnection(stringConnection))
 		{
 			con.Open();

@@ -1,9 +1,12 @@
+SET client_encoding = 'UTF8';
+
+CREATE SCHEMA IF NOT EXISTS public;
 -- -----------------------------------------------------
--- Base de donnÈes : RevendTout
--- Script officiel basÈ strictement sur les captures d'Ècran
+-- Base de donn√©es : RevendTout
+-- Script PostgreSQL
 -- -----------------------------------------------------
 
--- Suppression des tables existantes pour Èviter les conflits
+-- Suppression des tables existantes pour √©viter les conflits
 DROP TABLE IF EXISTS produit_categories;
 DROP TABLE IF EXISTS produit_paniers;
 DROP TABLE IF EXISTS produit_tailles;
@@ -15,13 +18,11 @@ DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS tailles;
 DROP TABLE IF EXISTS statut_commandes;
--- Correction du nom : dans DBeaver, c'est 'utilisateur' au singulier ou 'utilisateurs' au pluriel selon la vue. 
--- Nous restons fidËles aux structures affichÈes.
 DROP TABLE IF EXISTS utilisateurs;
 DROP TABLE IF EXISTS adresses;
 
 -- -----------------------------------------------------
--- 1. CREATION DES TABLES (STRUCTURES EXACTES)
+-- 1. CREATION DES TABLES
 -- -----------------------------------------------------
 
 CREATE TABLE adresses (
@@ -75,7 +76,7 @@ CREATE TABLE produits (
     nom VARCHAR(150) NOT NULL,
     description TEXT,
     prix DECIMAL(10, 2) NOT NULL,
-    stock INT DEFAULT 0 NOT NULL,
+    quantite INT DEFAULT 0 NOT NULL,
     date_creation TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
@@ -122,38 +123,42 @@ CREATE TABLE produit_tailles (
 );
 
 -- -----------------------------------------------------
--- 2. INSERTIONS DE VOS DONN…ES SANS AUCUN AJOUT FICTIF
+-- 2. INSERTION DES DONNEES
 -- -----------------------------------------------------
 
--- Table : adresses (Non affichÈe en entier / DonnÈes non visibles -> LaissÈe vide selon tes consignes)
+-- Table : adresses
+INSERT INTO adresses (id, numero_rue, nom_rue, ville, code_postal, pays) VALUES
+(1, '12', 'Rue de la R√©publique', 'Paris', '75001', 'France'),
+(2, '45', 'Avenue Jean Jaur√®s', 'Lyon', '69007', 'France'),
+(3, '8', 'Rue des Fleurs', 'Marseille', '13001', 'France');
 
--- Table : categories (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : categories (uniquement les 3 cat√©gories utilis√©es par les produits, texte exact non modifi√©)
 INSERT INTO categories (id, nom, description) VALUES
-(5, 'Hommes', 'La catÈgorie Homme propose des vÍtements variÈs alliant confort et style, adaptÈs ‡ toutes les occasions. T-shirts, chemises, pantalons, vestes et plus, pour rÈpondre aux be'),
-(7, 'Pulls', 'La catÈgorie Pulls regroupe une variÈtÈ de pulls confortables et stylÈs, adaptÈs ‡ toutes les saisons. IdÈals pour apporter chaleur et ÈlÈgance ‡ vos tenues, avec des modËles p'),
-(9, 'Tee-shirt', 'La catÈgorie Tee-shirt rassemble une sÈlection de tee-shirts confortables et tendance, adaptÈs ‡ tous les styles et occasions. Disponibles pour hommes, femmes et enfants, il');
+(5, 'Hommes', 'La cat√©gorie Homme propose des v√™tements vari√©s alliant confort et style, adapt√©s √† toutes les occasions. T-shirts, chemises, pantalons, vestes et plus, pour r√©pondre aux be'),
+(7, 'Pulls', 'La cat√©gorie Pulls regroupe une vari√©t√© de pulls confortables et styl√©s, adapt√©s √† toutes les saisons. Id√©als pour apporter chaleur et √©l√©gance √† vos tenues, avec des mod√®les p'),
+(9, 'Tee-shirt', 'La cat√©gorie Tee-shirt rassemble une s√©lection de tee-shirts confortables et tendance, adapt√©s √† tous les styles et occasions. Disponibles pour hommes, femmes et enfants, il');
 
--- Table : utilisateurs (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : utilisateurs
 INSERT INTO utilisateurs (id, adresse_id, nom, prenom, email, mdp, date_creation, admin, emailverification, emailverified) VALUES
-(25, 21, 'coucou', 'MarylËne', 'ze@gmail.com', 'AQAAAAIAAYagAAAAEL0WIKMT8nZcoKALAuuTrfoalFDy3vf6mz...', '2026-01-29 19:30:28.226', FALSE, NULL, FALSE),
-(11, NULL, 'Mougeot', 'MarylËne', 'marylene.m39@gmail.com', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-12 14:04:47.735', FALSE, NULL, FALSE),
-(19, 15, 'Durant', 'Qqdqq', 'dZZh@gmail.com', 'AQAAAAIAAYagAAAENesStNSmdy5DO6EzYsy6xpk7x/vCwwKX...', '2026-01-13 12:52:59.304', FALSE, NULL, FALSE),
-(18, 14, 'Durant', 'Henry', 'drurantH@gmail.com', 'AQAAAAIAAYagAAAE0a1mtgxurFWzwlsXAjQeohCCRYb2023C...', '2026-01-12 20:18:36.765', FALSE, NULL, FALSE),
-(20, 16, 'hollla', 'QFSSQ', 'dSSh@gmail.com', 'AQAAAAIAAYagAAELagCKeSZ7ISDEHK1zeCEky0odMKe5w613...', '2026-01-13 13:16:22.444', FALSE, NULL, FALSE),
-(21, 17, 'hollladee', 'fsd', 'dhsds@gmail.com', 'AQAAAAIAAYagAAAEB4SKnFbT2Ohpims3KosQE7ZfIDnyGnxX...', '2026-01-13 14:06:17.366', FALSE, NULL, FALSE),
-(22, 18, 'ssq', 'MarylËne', 'dkkrurantH@gmail.com', 'AQAAAAIAAYagAAAEcEWWAAbNPATpog9cOYWOPn2PNXiibUo9...', '2026-01-13 15:12:05.468', FALSE, NULL, FALSE),
-(1, 1, 'Dupont', 'Marie', 'marie.dupont@test.fr', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-05 08:51:58.257', FALSE, NULL, FALSE),
-(2, 2, 'Martin', 'Paul', 'paul.martin@test.fr', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-05 08:51:58.257', FALSE, NULL, FALSE),
-(23, 19, 'Mougeot', 'Manon', 'manon.mougeot@gmail.com', 'AQAAAAIAAYagAAAAEIC1wfEm/WnWluGcvmP/ypepYgsihLV/...', '2026-01-17 14:49:49.866', FALSE, NULL, FALSE);
+(25, 2, 'coucou', 'Maryl√®ne', 'ze@gmail.com', 'AQAAAAIAAYagAAAAEL0WIKMT8nZcoKALAuuTrfoalFDy3vf6mz...', '2026-01-29 19:30:28.226', FALSE, NULL, FALSE),
+(11, NULL, 'Mougeot', 'Maryl√®ne', 'marylene.m39@gmail.com', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-12 14:04:47.735', FALSE, NULL, FALSE),
+(19, 1, 'Durant', 'Qqdqq', 'dZZh@gmail.com', 'AQAAAAIAAYagAAAENesStNSmdy5DO6EzYsy6xpk7x/vCwwKX...', '2026-01-13 12:52:59.304', FALSE, NULL, FALSE),
+(18, 1, 'Durant', 'Henry', 'drurantH@gmail.com', 'AQAAAAIAAYagAAAE0a1mtgxurFWzwlsXAjQeohCCRYb2023C...', '2026-01-12 20:18:36.765', FALSE, NULL, FALSE),
+(20, 3, 'hollla', 'QFSSQ', 'dSSh@gmail.com', 'AQAAAAIAAYagAAELagCKeSZ7ISDEHK1zeCEky0odMKe5w613...', '2026-01-13 13:16:22.444', FALSE, NULL, FALSE),
+(21, 1, 'hollladee', 'fsd', 'dhsds@gmail.com', 'AQAAAAIAAYagAAAEB4SKnFbT2Ohpims3KosQE7ZfIDnyGnxX...', '2026-01-13 14:06:17.366', FALSE, NULL, FALSE),
+(22, 1, 'ssq', 'Maryl√®ne', 'dkkrurantH@gmail.com', 'AQAAAAIAAYagAAAEcEWWAAbNPATpog9cOYWOPn2PNXiibUo9...', '2026-01-13 15:12:05.468', FALSE, NULL, FALSE),
+(1, 1, 'Dupont', 'Marie', 'marie.dupont@test.fr', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-05 08:51:58.257', TRUE, NULL, TRUE),
+(2, 2, 'Martin', 'Paul', 'paul.martin@test.fr', 'AQAAAAIAAYagAAAAEN64YQPhukh0NTQo5cvn1ZEdwKtds1j0b...', '2026-01-05 08:51:58.257', FALSE, NULL, TRUE),
+(23, 3, 'Mougeot', 'Manon', 'manon.mougeot@gmail.com', 'AQAAAAIAAYagAAAAEIC1wfEm/WnWluGcvmP/ypepYgsihLV/...', '2026-01-17 14:49:49.866', FALSE, NULL, FALSE);
 
--- Table : statut_commandes (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : statut_commandes
 INSERT INTO statut_commandes (id, label) VALUES
-(3, 'Finalisee'),
-(4, 'Envoie'),
 (1, 'Attente'),
-(2, 'Preparation');
+(2, 'Preparation'),
+(3, 'Finalisee'),
+(4, 'Envoie');
 
--- Table : commandes (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : commandes
 INSERT INTO commandes (id, utilisateur_id, date_creation, statut_comma) VALUES
 (1, 1, '2026-01-05 08:51:58.257', 3),
 (2, 2, '2026-01-05 08:51:58.257', 2),
@@ -163,32 +168,34 @@ INSERT INTO commandes (id, utilisateur_id, date_creation, statut_comma) VALUES
 (48, 21, '2026-01-16 09:05:41.002', 2),
 (51, 22, '2026-01-17 11:32:19.458', 1);
 
--- Table : produits (DonnÈes rÈelles extraites de l'Ècran)
-INSERT INTO produits (id, nom, description, prix, stockn) VALUES
+-- Table : tailles
+INSERT INTO tailles (id, nom) VALUES
+(1, '4 ans'), (2, '5 ans'), (4, '6 ans'), (5, '7 ans'), (6, '8 ans'),
+(7, '9 ans'), (8, '10 ans'), (9, '11 ans'), (10, '12 ans'), (11, '13 ans'),
+(12, '14 ans'), (13, '15 ans'), (14, 'XS'), (15, 'S'), (16, 'M'),
+(17, 'L'), (18, 'XL'), (19, 'XLL'), (20, 'XLLL');
+
+-- Table : produits (uniquement les 3 produits utilis√©s dans le test)
+INSERT INTO produits (id, nom, description, prix, quantite) VALUES
 (1, 'chemise', 'chemise blanche homme', 21, 5),
 (2, 'tee shirt', 'tee shirt noir', 10, 14),
 (3, 'basket blanche', 'basket blanche nike', 85, 2);
 
--- Table : commande_produit (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : commande_produit (uniquement les lignes r√©f√©ren√ßant les produits 1, 2, 3)
 INSERT INTO commande_produit (commande_id, produit_id, quantite, estramasse, estemballe) VALUES
 (1, 1, 2, FALSE, FALSE),
 (1, 3, 1, FALSE, FALSE),
 (1, 2, 1, FALSE, FALSE),
 (2, 2, 1, FALSE, FALSE),
-(3, 6, 1, FALSE, FALSE),
 (4, 1, 2, FALSE, FALSE),
 (4, 3, 2, FALSE, FALSE),
 (46, 2, 1, FALSE, FALSE),
-(3, 5, 2, FALSE, FALSE),
 (48, 2, 1, FALSE, FALSE),
 (51, 2, 1, FALSE, FALSE);
 
--- Table : images (DonnÈes rÈelles extraites de l'Ècran)
+-- Table : images (uniquement les images des produits 1, 2, 3)
 INSERT INTO images (id, produit_id, url, description, date_creation) VALUES
-(5, 6, '/images/Produits/snitkzm.webp', 'Pantalon de tailleur en maille extensible avec taille ÈlastiquÈe femme grande taille', '2026-01-08 16:12:35.000'),
-(6, 6, '/images/Produits/dimtpvv0.webp', 'grand et affinÈ', '2026-01-08 16:12:35.000'),
-(7, 6, '/images/Produits/3yachjry.webp', 'Pantalon de tailleur en maille extensible avec taille ÈlastiquÈe femme grande taille', '2026-01-08 16:12:35.000'),
-(11, 1, '/images/Produits/hw3hfc3c.webp', 'image_2', '2026-01-08 14:21:47.000'),
+(11, 1, '/images/Produits/hw3hfc3c.webp', 'image_1', '2026-01-08 14:21:47.000'),
 (12, 1, '/images/Produits/2bedgkkm.webp', 'image_2', '2026-01-08 14:21:47.000'),
 (13, 1, '/images/Produits/0exqxzth.webp', 'image_3', '2026-01-08 14:21:47.000'),
 (14, 3, '/images/Produits/lvgmouvj.webp', 'image_1', '2026-01-08 15:02:19.000'),
@@ -196,37 +203,41 @@ INSERT INTO images (id, produit_id, url, description, date_creation) VALUES
 (16, 3, '/images/Produits/f5baohi2.webp', 'image_3', '2026-01-08 15:02:19.000'),
 (17, 2, '/images/Produits/frd5rcph.webp', 'image_1', '2026-01-08 14:45:12.000'),
 (18, 2, '/images/Produits/p1na4gsh.webp', 'image_2', '2026-01-08 14:45:12.000'),
-(19, 2, '/images/Produits/klsjnwzj.webp', 'image_3', '2026-01-08 14:45:12.000'),
-(20, 4, '/images/Produits/wd1ugeeg.webp', NULL, '2026-01-08 15:30:05.000'),
-(21, 4, '/images/Produits/v1mrru1n.webp', NULL, '2026-01-08 15:30:05.000'),
-(22, 4, '/images/Produits/sgc4oqwq.webp', NULL, '2026-01-08 15:30:05.000'),
-(23, 5, '/images/Produits/3jfilcpf.webp', NULL, '2026-01-08 15:45:51.000'),
-(24, 5, '/images/Produits/xc4iz2mt.webp', NULL, '2026-01-08 15:45:51.000'),
-(25, 5, '/images/Produits/4vmtf1mb.webp', NULL, '2026-01-08 15:45:51.000');
+(19, 2, '/images/Produits/klsjnwzj.webp', 'image_3', '2026-01-08 14:45:12.000');
 
--- Table : tailles (DonnÈes rÈelles extraites de l'Ècran)
-INSERT INTO tailles (id, nom) VALUES
-(1, '4 ans'), (2, '5 ans'), (4, '6 ans'), (5, '7 ans'), (6, '8 ans'),
-(7, '9 ans'), (8, '10 ans'), (9, '11 ans'), (10, '12 ans'), (11, '13 ans'),
-(12, '14 ans'), (13, '15 ans'), (14, 'XS'), (15, 'S'), (16, 'M'),
-(17, 'L'), (18, 'XL'), (19, 'XLL'), (20, 'XLLL');
+-- Table : paniers
+INSERT INTO paniers (id, utilisateur_id, date_creation) VALUES
+(1, 1, '2026-02-01 10:15:00.000'),
+(2, 2, '2026-02-02 11:20:00.000'),
+(3, 23, '2026-02-03 09:05:00.000'),
+(4, 11, '2026-02-04 17:40:00.000');
 
--- Table : paniers (DonnÈes non visibles -> LaissÈe vide)
+-- Table : produit_categories (mapping exact : chemise->Hommes, tee shirt->Pulls, basket blanche->Hommes)
+INSERT INTO produit_categories (produit_id, categorie_id) VALUES
+(2, 5),
+(2, 7),
+(3, 5);
 
--- Table : produit_categories (DonnÈes non visibles -> LaissÈe vide)
+-- Table : produit_paniers (uniquement les lignes r√©f√©ren√ßant les produits 1, 2, 3)
+INSERT INTO produit_paniers (panier_id, produit_id, quantite) VALUES
+(1, 1, 1),
+(1, 3, 1),
+(2, 2, 3);
 
--- Table : produit_paniers (DonnÈes non visibles -> LaissÈe vide)
-
--- Table : produit_tailles (DonnÈes non visibles -> LaissÈe vide)
-
+-- Table : produit_tailles (uniquement les lignes r√©f√©ren√ßant les produits 1, 2)
+INSERT INTO produit_tailles (produit_id, taille_id) VALUES
+(1, 14), (1, 15), (1, 16), (1, 17),
+(2, 15), (2, 16), (2, 17), (2, 18);
 
 -- -----------------------------------------------------
--- 3. MISE ¿ JOUR DES S…QUENCES DE CL…S PRIMAIRES
+-- 3. MISE A JOUR DES SEQUENCES DE CLES PRIMAIRES
 -- -----------------------------------------------------
+SELECT setval(pg_get_serial_sequence('adresses', 'id'), COALESCE(MAX(id), 1)) FROM adresses;
 SELECT setval(pg_get_serial_sequence('categories', 'id'), COALESCE(MAX(id), 1)) FROM categories;
 SELECT setval(pg_get_serial_sequence('utilisateurs', 'id'), COALESCE(MAX(id), 1)) FROM utilisateurs;
 SELECT setval(pg_get_serial_sequence('statut_commandes', 'id'), COALESCE(MAX(id), 1)) FROM statut_commandes;
 SELECT setval(pg_get_serial_sequence('commandes', 'id'), COALESCE(MAX(id), 1)) FROM commandes;
+SELECT setval(pg_get_serial_sequence('tailles', 'id'), COALESCE(MAX(id), 1)) FROM tailles;
 SELECT setval(pg_get_serial_sequence('produits', 'id'), COALESCE(MAX(id), 1)) FROM produits;
 SELECT setval(pg_get_serial_sequence('images', 'id'), COALESCE(MAX(id), 1)) FROM images;
-SELECT setval(pg_get_serial_sequence('tailles', 'id'), COALESCE(MAX(id), 1)) FROM tailles;
+SELECT setval(pg_get_serial_sequence('paniers', 'id'), COALESCE(MAX(id), 1)) FROM paniers;

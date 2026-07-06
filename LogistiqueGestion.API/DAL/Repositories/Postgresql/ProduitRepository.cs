@@ -42,16 +42,19 @@ public class ProduitRepositoryPostgresql : IProduitRepository
 
     public async Task<IEnumerable<Produit>> GetAllAsync()
     {
-        var query = @"select p.id, p.nom, p.quantite , p.prix , p.description, pc.categorie_id, c.id, c.nom, c.description  
-                        from produits p 
-                      inner join produit_categories pc ON p.id  = pc.produit_id 
-                      inner join categories c on c.id = pc.categorie_id ;";
+        var query = @"select p.id, p.nom, p.quantite, p.prix, p.description, c.id, c.nom, c.description
+              from produits p
+              join produit_categories pc ON p.id = pc.produit_id
+              join categories c on c.id = pc.categorie_id
+              order by p.id, c.id;";
 
         var result = await _db.Connection.QueryAsync<Produit, Categorie, Produit>(
             query,
             (p, c) => { p.Categorie = c; return p; },
             transaction: _db.TransactionSql,
-            splitOn: "categorie_id");
+            splitOn: "id" // Découpe dès qu'on rencontre le 'id' de la table categories
+        );
+
 
         // On vérifie si la collection est vide (plutôt que de prendre le premier)
         if (result == null || !result.Any())

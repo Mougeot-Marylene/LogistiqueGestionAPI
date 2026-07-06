@@ -14,7 +14,10 @@ namespace LogistiqueGestion.API
 
             // Add services to the container.
             // Ajoute nos controller à l'interrieur
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+
+            });
             builder.Services.AddBLL();
 
             builder.Services.AddDAL((DALOptions options) =>
