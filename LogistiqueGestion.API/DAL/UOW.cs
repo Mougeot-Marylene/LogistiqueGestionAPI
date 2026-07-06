@@ -17,6 +17,7 @@ public class UOW : IUOW
 
     public ICategorieRepository Categories => CurrrentDictionnary.GetValueOrDefault(typeof(ICategorieRepository)) as ICategorieRepository;
 
+    public ICommandeRepository Commande => CurrrentDictionnary.GetValueOrDefault(typeof(ICommandeRepository)) as ICommandeRepository;
 
     public UOW(String connectionString, EDBType eDBType)
     {
@@ -27,7 +28,8 @@ public class UOW : IUOW
             case EDBType.POSTGRESQL: 
                 CurrrentDictionnary = new Dictionary<Type, object> {
                     {typeof(IProduitRepository), new ProduitRepositoryPostgresql(_session) },
-                     {typeof(ICategorieRepository), new CategorieRepositoryPostgresql(_session) }
+                    {typeof(ICategorieRepository), new CategorieRepositoryPostgresql(_session) },
+                    {typeof(ICommandeRepository), new CommandeRepositoryPostgresql(_session) }
                 };
                 break;
         }
