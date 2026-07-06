@@ -42,7 +42,7 @@ public class ProduitsControllerTests : FixtureIntegration
         };
 
         //Act
-        var actual = await _httpClient.GetFromJsonAsync<GetProduitsDTOResponse>("/api/produits");
+        var actual = await HttpClient.GetFromJsonAsync<GetProduitsDTOResponse>("/api/produits");
 
         //Assert
         Assert.Equivalent(expected, actual);

@@ -10,13 +10,13 @@ namespace TestIntegration.Fixtrures;
 
 public class FixtureIntegration: IClassFixture<APIFactory>
 {
-	public HttpClient _httpClient { get; private set; }
-    public APIFactory aPIFactory { get; private set; }
+	public HttpClient HttpClient { get; private set; }
+    public APIFactory InstanceApplicationWeb { get; private set; }
 
-    public FixtureIntegration(APIFactory instance)
+    public FixtureIntegration(APIFactory instanceApplicationWeb)
 	{
-		_httpClient = instance.CreateClient();
-		aPIFactory = instance;
+		HttpClient = instanceApplicationWeb.CreateClient();
+        InstanceApplicationWeb = instanceApplicationWeb;
 	}
 
 	//login
@@ -38,7 +38,7 @@ public class FixtureIntegration: IClassFixture<APIFactory>
 
 	//       }
 
-	//	var rep = await _httpClient.PostAsJsonAsync<LoginRequestDTO>("/api/login", request);
+	//	var rep = await HttpClient.PostAsJsonAsync<LoginRequestDTO>("/api/login", request);
 
 	//	Assert.True(rep.IsSuccessStatusCode, $"Login fail with Username: {request.Username} Password: {request.Password}");
 
@@ -47,18 +47,18 @@ public class FixtureIntegration: IClassFixture<APIFactory>
 	//	Assert.NotNull(token);
 	//	Assert.NotNull(token.access_token);
 
-	//	_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.access_token);
+	//	HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.access_token);
 	//   }
 
 
 	//logout
-	public async Task Logout() => _httpClient.DefaultRequestHeaders.Authorization = null;
+	public async Task Logout() => HttpClient.DefaultRequestHeaders.Authorization = null;
 
 	//Up.Database (recréer bdd)
 	public async Task UpDB()
 	{
 		await DownBD();
-        var configService = aPIFactory.Server.Services.GetRequiredService<IConfiguration>();
+        var configService = InstanceApplicationWeb.Server.Services.GetRequiredService<IConfiguration>();
         string stringConnection = configService.GetValue<string>("ConnectionDB");
         string query = File.ReadAllText(
     Path.Combine(AppContext.BaseDirectory, "CreateDB.sql"),
@@ -74,7 +74,7 @@ public class FixtureIntegration: IClassFixture<APIFactory>
 	//DownDatabase (efface BDD)
 	public async Task DownBD()
 	{
-		var configService = aPIFactory.Server.Services.GetRequiredService<IConfiguration>();
+		var configService = InstanceApplicationWeb.Server.Services.GetRequiredService<IConfiguration>();
 		string stringConnection = configService.GetValue<string>("ConnectionDB");
 		string query = "DROP SCHEMA if exists public CASCADE";
 		using(var con = new NpgsqlConnection(stringConnection))
