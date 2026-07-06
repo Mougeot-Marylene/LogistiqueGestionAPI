@@ -19,8 +19,6 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: password
   POSTGRES_HOST_AUTH_METHOD: trust
-  # Cette variable va écraser la valeur de appsettings.Integration.json dans le runner :
-  ConnectionDB: "Server=postgres;Port=5432;Database=RevendToutTEST;User Id=postgres;Password=password;"
 
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
