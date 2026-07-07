@@ -13,6 +13,10 @@ public class CommandeService : ICommandeService
         _db = session;
     }
 
+    public async Task<Commande> GetCommandeAsync(int id)
+    {
+        return await _db.Commande.GetAsync(id);
+    }
 
     public async Task<IEnumerable<Commande>> GetCommandesAsync()
     {

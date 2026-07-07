@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: RevendTout
+      POSTGRES_DB: LogistiqueGestion
     volumes:
       - logistiquedb:/var/lib/postgresql/
       - ./initdb.d:/docker-entrypoint-initdb.d
@@ -22,7 +22,7 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionDB=Server=db;database=RevendTout;uid=postgres;Pwd=password;Port=5432
+      - ConnectionDB=Server=db;database=LogistiqueGestion;uid=postgres;Pwd=password;Port=5432
       - TypeDB=POSTGRESQL
     networks:
       - logistique-net

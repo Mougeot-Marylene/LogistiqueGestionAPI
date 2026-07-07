@@ -9,4 +9,10 @@ public interface ICommandeService
     /// </summary>
     /// <returns>Tous les commandes</returns>
     public Task<IEnumerable<Commande>> GetCommandesAsync();
+
+    /// <summary>
+    /// Récupérer une commande par son id
+    /// </summary>
+    /// <returns>Commande par son id</returns>
+    public Task<Commande> GetCommandeAsync(int id);
 }

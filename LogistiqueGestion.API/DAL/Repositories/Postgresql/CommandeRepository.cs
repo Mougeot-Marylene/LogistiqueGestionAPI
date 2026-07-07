@@ -2,6 +2,7 @@
 using Domain.Domaine.Entities;
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogistiqueGestion.API.DAL.Repositories.Postgresql;
 
@@ -23,6 +24,7 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
     {
         string query = @"SELECT 
                             c.id,
+                            c.statut_commandes_id AS statut,
                             u.nom AS NomUtilisateur,
                             u.prenom AS PrenomUtilisateur 
                         FROM commandes c
@@ -32,9 +34,19 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
 
     }
 
-    public Task<Commande> GetAsync(int id)
+    public async Task<Commande> GetAsync(int id)
     {
-        throw new NotImplementedException();
+        string query = @"select 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur
+                        from commandes c 
+                        join utilisateurs u on c.utilisateur_id = u.id
+                        where c.id = @id";
+
+        return await _db.Connection.QueryFirstOrDefaultAsync<Commande>(query, new { id = id }, transaction: _db.TransactionSql);
+
     }
 
     public Task<Commande> Update(Commande entity)

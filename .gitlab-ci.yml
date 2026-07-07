@@ -15,13 +15,13 @@ variables:
   DOCKER_HOST: "unix:///runner/services/docker/docker.sock"
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest  
-  POSTGRES_DB: RevendToutTEST
+  POSTGRES_DB: LogistiqueGestionTEST
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: password
   POSTGRES_HOST_AUTH_METHOD: trust
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-  ConnectionDB: "Server=postgres;Port=5432;Database=RevendToutTEST;User Id=postgres;Password=password;"
+  ConnectionDB: "Server=postgres;Port=5432;Database=LogistiqueGestionTEST;User Id=postgres;Password=password;"
   TypeDB: "POSTGRESQL"
 
 image: mcr.microsoft.com/dotnet/sdk:8.0
