@@ -22,7 +22,8 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:RevendTout=Server=db;database=RevendTout;uid=postgres;Pwd=password;Port=5432
+      - ConnectionDB=Server=db;database=RevendTout;uid=postgres;Pwd=password;Port=5432
+      - TypeDB=POSTGRESQL
     networks:
       - logistique-net
     depends_on:
