@@ -25,6 +25,8 @@ public class CommandesController : APIBaseController
         var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse(){
 			Id = commandes.Id,
 			Statut = commandes.Statut,
+			NomUtilisateur = commandes.NomUtilisateur,
+			PrenomUtilisateur = commandes.PrenomUtilisateur
 		});
 
 		var response = new GetCommandesDTOResponse()

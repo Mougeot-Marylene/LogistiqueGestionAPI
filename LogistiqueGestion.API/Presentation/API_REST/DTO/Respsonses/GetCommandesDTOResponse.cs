@@ -9,4 +9,6 @@ public class GetCOmmandesItemDTOResponse
 {
     public int Id { get; set; }
     public int Statut { get; set; }
+    public string NomUtilisateur { get; set; }
+    public string PrenomUtilisateur { get; set; }
 }

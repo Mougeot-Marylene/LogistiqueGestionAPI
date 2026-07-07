@@ -21,7 +21,11 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
 
     public async Task<IEnumerable<Commande>> GetAllAsync()
     {
-        string query = @"SELECT c.id, u.nom, u.prenom  FROM commandes c
+        string query = @"SELECT 
+                            c.id,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
                         join utilisateurs u on c.utilisateur_id = u.id ";
 
         return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);

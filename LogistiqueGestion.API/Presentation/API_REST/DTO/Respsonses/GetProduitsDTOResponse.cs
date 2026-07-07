@@ -15,4 +15,5 @@ public class GetProduitsItemDTOResponse
     public string Description { get; set; }
     public decimal Prix { get; set; }
     public Categorie Categorie { get; set; }
+
 }
