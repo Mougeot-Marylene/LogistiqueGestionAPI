@@ -19,11 +19,18 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: password
   POSTGRES_HOST_AUTH_METHOD: trust
-
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
   ConnectionDB: "Server=postgres;Port=5432;Database=RevendToutTEST;User Id=postgres;Password=password;"
   TypeDB: "POSTGRESQL"
 
 image: mcr.microsoft.com/dotnet/sdk:8.0
+
+stages:
+  - build
+  - test
+  - build-sonar
+  - deploy
 
 build-job:
   stage: build
@@ -38,6 +45,24 @@ test-job:
 
     - dotnet test
 
+build-sonar:
+  stage: build-sonar
+  
+  
+  cache:
+    policy: pull-push
+    key: "sonar-cache-$CI_COMMIT_REF_SLUG"
+    paths:
+      - "${SONAR_USER_HOME}/cache"
+      - sonar-scanner/
+      
+  script: 
+      - "dotnet tool install --global dotnet-sonarscanner"
+      - "export PATH=\"$PATH:$HOME/.dotnet/tools\""
+      - "dotnet sonarscanner begin /k:\"mmougeo_cda11-mougeot_marylene-fr-jalon_2_logistiquegestionapi_71e46314-f742-4500-b203-e484ed029769\" /d:sonar.token=\"$SONAR_TOKEN\" /d:\"sonar.host.url=$SONAR_HOST_URL\" "
+      - "dotnet build"
+      - "dotnet sonarscanner end /d:sonar.token=\"$SONAR_TOKEN\""
+  allow_failure: true
 
 docker-build:
   stage: deploy

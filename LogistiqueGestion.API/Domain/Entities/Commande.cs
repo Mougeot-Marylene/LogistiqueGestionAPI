@@ -11,4 +11,14 @@ public class Commande : Entity
     /// Statut de la commande
     /// </summary>
     public int Statut { get; set; }
+
+    /// <summary>
+    /// Nom de la personne qui à passé commande
+    /// </summary>
+    public string NomUtilisateur { get; set; }
+
+    /// <summary>
+    ///  Prénom de la personne qui à passé commande
+    /// </summary>
+    public string PrenomUtilisateur { get; set; }
 }
