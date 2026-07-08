@@ -1,6 +1,9 @@
 using LogistiqueGestion.API.DAL;
 using LogistiqueGestion.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 [assembly:InternalsVisibleTo("TestUnitaires")] // permet au test unitaire des voir les class internes (pour faire les test)
 namespace LogistiqueGestion.API
@@ -14,10 +17,17 @@ namespace LogistiqueGestion.API
 
             // Add services to the container.
             // Ajoute nos controller à l'interrieur
-            builder.Services.AddControllers(options =>
-            {
+            builder.Services
+                .AddControllers(options =>
+                {
 
-            });
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.WriteIndented = true;
+                });
+
+            
             builder.Services.AddBLL();
 
             builder.Services.AddDAL((DALOptions options) =>
@@ -30,12 +40,28 @@ namespace LogistiqueGestion.API
                 ;
             });
 
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ezesqknjsqnjndguksqdddddddddddddddsqdezdezdxdzegregtrsqddazrfgrgtrfgrefrefzeqddkjzsndzenee"))
+                    };
+                });
+
+
             var app = builder.Build();
 
 
             // Configure the HTTP request pipeline.
-              //pipeline de middlewaire
-                 //app.UseAuthorization();
+            //pipeline de middlewaire
+            app.UseAuthentication();
+
+            app.UseAuthorization();
             // Fin  de pipeline de middlewaire
            
             

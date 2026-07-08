@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
@@ -8,6 +9,7 @@ namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 /// Cette classe est la classe de base pour tous les contrôleurs API de l'application.
 /// </summary>
 [ApiController] // Cet attribut est utilisé pour indiquer que la classe est un contrôleur API.
+[Authorize]
 [Route("api/[Controller]")] // Cet attribut est utilisé pour spécifier le modèle de route du contrôleur. 
                             // "[Controller]" est remplacé par le nom de la classe du contrôleur.
 public abstract class APIBaseController : ControllerBase

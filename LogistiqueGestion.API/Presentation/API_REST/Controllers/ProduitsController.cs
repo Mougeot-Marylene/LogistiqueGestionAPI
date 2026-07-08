@@ -3,7 +3,9 @@ using Domain.Domaine.Entities;
 using LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
 using LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
 using LogistiqueGestion.API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 
@@ -17,12 +19,15 @@ public class ProduitsController : APIBaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> GetAll()
     {
         //Appel de la logique métier
         IEnumerable<Produit> produits = await _produitService.GetProductsAsync();
 
         //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)
+       var username = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
        var items = produits.Select(produits => new GetProduitsItemDTOResponse() 
         { 
             Id = produits.Id,  
