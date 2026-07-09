@@ -4,7 +4,7 @@ using LogistiqueGestion.API.DAL.Repositories.Postgresql;
 
 namespace LogistiqueGestion.API.DAL;
 
-public class UOW : IUOW
+public class UOW : IUOW, IDisposable
 {
     private readonly ISession _session;
 
