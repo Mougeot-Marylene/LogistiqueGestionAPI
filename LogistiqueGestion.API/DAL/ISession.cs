@@ -7,6 +7,6 @@ namespace LogistiqueGestion.API.DAL
         EDBType EDBType { get; }
         IDbConnection Connection { get; }
 
-        IDbTransaction TransactionSql { get; set; }
+        IDbTransaction? TransactionSql { get; set; }
     }
 }
