@@ -41,12 +41,15 @@ public class CommandesController : APIBaseController
 
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetCommandeAsync([FromRoute]int id)
-	{
-		if (id <= 0) return BadRequest();
+    {
+        if (id <= 0)
+        {
+            return BadRequest();
+        }
+
         try
         {
             var commande = await _commandeService.GetCommandeAsync(id);
-
             var response = new GetCOmmandesItemDTOResponse()
             {
                 Id = commande.Id,
@@ -60,6 +63,5 @@ public class CommandesController : APIBaseController
         {
             return NotFound();
         }
-
     }
 }

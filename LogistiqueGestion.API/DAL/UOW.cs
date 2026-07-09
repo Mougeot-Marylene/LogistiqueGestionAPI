@@ -48,10 +48,14 @@ public class UOW : IUOW
     public void Commit()
     {
         _session.TransactionSql?.Commit();
+        _session.TransactionSql?.Dispose();
+        _session.TransactionSql = null;
     }
 
     public void RollBack()
     {
        _session.TransactionSql?.Rollback();
+        _session.TransactionSql?.Dispose();
+        _session.TransactionSql = null;
     }
 }
