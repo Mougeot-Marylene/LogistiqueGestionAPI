@@ -49,7 +49,7 @@ namespace LogistiqueGestion.API
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ezesqknjsqnjndguksqdddddddddddddddsqdezdezdxdzegregtrsqddazrfgrgtrfgrefrefzeqddkjzsndzenee"))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("dezesqknjsqnjndguksqdddddddddddddddsqdezdezdxdzegregtrsqddazrfgrgtrfgrefrefzeqddkjzsndzenee"))
                     };
                 });
 

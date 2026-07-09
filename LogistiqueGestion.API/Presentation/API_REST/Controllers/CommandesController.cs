@@ -1,7 +1,7 @@
 ﻿
 using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.Domain.Entities;
-using LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
+using LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
 

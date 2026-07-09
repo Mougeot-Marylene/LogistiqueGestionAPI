@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 
-public class UtilicateursController : APIBaseController
+public class UtilisateursController : APIBaseController
 {
     private readonly ISecurityService _securityService;
-    public UtilicateursController(ISecurityService securityService)
+    public UtilisateursController(ISecurityService securityService)
     {
         _securityService = securityService;
     }
@@ -26,7 +26,7 @@ public class UtilicateursController : APIBaseController
         {
            var token = _securityService.Login(loginRequestDTO.Username, loginRequestDTO.Password);
 
-            return Ok(new{ cces_token = token});
+            return Ok(new{ access_token = token});
         }
         catch (Exception ex)
         {

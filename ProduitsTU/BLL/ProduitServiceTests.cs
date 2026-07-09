@@ -1,10 +1,9 @@
 ﻿
 using Domain.Domaine.Entities;
+using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.DAL;
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Services;
-using LogistiqueGestion.API.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace TestUnitaires.BLL;
@@ -24,6 +23,8 @@ public class ProduitServiceTests
 
         // ← Mock vide (on ne l'utilisera pas car l'exception sera levée avant)
         IUOW uOWDummy = Mock.Of<IUOW>();
+
+
 
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
@@ -73,6 +74,7 @@ public class ProduitServiceTests
         };
 
         IUOW uOWDummy = Mock.Of<IUOW>();  // ← Mock vide (on ne l'utilisera pas car l'exception sera levée avant)
+
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
         //Act + Assert (Exécution + Vérification)
@@ -119,6 +121,7 @@ public class ProduitServiceTests
         };
 
         IUOW uOWDummy = Mock.Of<IUOW>();  // ← Mock vide (on ne l'utilisera pas car l'exception sera levée avant)
+
         var sut = new ProduitService(uOWDummy);  // ← Crée le service
 
         //Act + Assert (Exécution + Vérification)
@@ -141,8 +144,8 @@ public class ProduitServiceTests
         };
 
         IUOW uow = Mock.Of<IUOW>();  // ← Crée un mock vide de IUOW
-        IProduitRepository produitRepositoryMock = Mock.Of<IProduitRepository>();  // ← Crée un mock vide du repository
 
+        IProduitRepository produitRepositoryMock = Mock.Of<IProduitRepository>();  // ← Crée un mock vide du repository
 
         // ← Configure le mock uow pour retourner le repository mocké
         Mock.Get(uow)

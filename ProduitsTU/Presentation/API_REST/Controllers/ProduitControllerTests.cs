@@ -1,9 +1,11 @@
 using Domain.Domaine.Entities;
 using LogistiqueGestion.API.Presentation.API_REST.Controllers;
-using LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
+using LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 using LogistiqueGestion.API.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace TestUnitaires.Presentation.API_REST.Controllers;
 
@@ -77,6 +79,8 @@ public class ProduitControllerTests
             .ReturnsAsync(produits) // ...elle retourne la liste "produits"
             .Verifiable(Times.Once); // verifie qu'il appel au moins une fois
 
+
+
         // Construction de la réponse DTO attendue, à partir des produits (mapping manuel)
         GetProduitsDTOResponse expectedResponseBody = new GetProduitsDTOResponse()
         {
@@ -111,9 +115,24 @@ public class ProduitControllerTests
                 }
             }
         };
-
         // Instanciation du contrôleur à tester, avec le mock injecté
         var sut = new ProduitsController(produitServiceMock);
+
+        // --- AJOUT : Simulation de l'utilisateur connecté ---
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, "MonUtilisateurDeTest"),
+            new Claim(ClaimTypes.Role, "USER")
+        };
+                var identity = new ClaimsIdentity(claims, "TestAuthType");
+                var claimsPrincipal = new ClaimsPrincipal(identity);
+
+                sut.ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext { User = claimsPrincipal }
+                };
+        // -----------------------------------------------------
+
 
         // Act
         // Appel de la méthode du contrôleur à tester

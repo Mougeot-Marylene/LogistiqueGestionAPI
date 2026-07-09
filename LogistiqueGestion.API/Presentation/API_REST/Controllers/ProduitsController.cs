@@ -1,7 +1,8 @@
 ﻿
 using Domain.Domaine.Entities;
+using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
-using LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
+using LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 using LogistiqueGestion.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,7 @@ public class ProduitsController : APIBaseController
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> UpdateProduit([FromRoute] int id, [FromBody] UpdateProduitDTORequest request)
     {
         try

@@ -1,4 +1,4 @@
-﻿namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Respsonses;
+﻿namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 
 public class GetCommandesDTOResponse
 {

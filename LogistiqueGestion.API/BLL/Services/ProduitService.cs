@@ -1,4 +1,5 @@
 ﻿using Domain.Domaine.Entities;
+using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.DAL;
 using LogistiqueGestion.API.Services.Interfaces;
 
@@ -6,7 +7,9 @@ namespace LogistiqueGestion.API.Services;
 
 public class ProduitService : IProduitService
 {
+
     private readonly IUOW _db;
+
     public ProduitService(IUOW db)
     {
         _db = db;

@@ -1,4 +1,5 @@
-﻿using LogistiqueGestion.API.DAL.Repositories.Interfaces;
+﻿using LogistiqueGestion.API.BLL.Services.Interfaces;
+using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.DAL.Repositories.Postgresql;
 
 namespace LogistiqueGestion.API.DAL;

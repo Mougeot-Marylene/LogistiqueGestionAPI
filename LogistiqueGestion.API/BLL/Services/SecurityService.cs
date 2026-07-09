@@ -48,7 +48,7 @@ public class SecurityService : ISecurityService
         }
 
         //Creadentails pour signer (secret Key + Algo)
-        SecurityKey securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ezesqknjsqnjndguksqdddddddddddddddsqdezdezdxdzegregtrsqddazrfgrgtrfgrefrefzeqddkjzsndzenee"));
+        SecurityKey securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("dezesqknjsqnjndguksqdddddddddddddddsqdezdezdxdzegregtrsqddazrfgrgtrfgrefrefzeqddkjzsndzenee"));
        
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512);
 
@@ -56,7 +56,7 @@ public class SecurityService : ISecurityService
         JwtSecurityToken token = new JwtSecurityToken(
             claims: claims,
             signingCredentials: signingCredentials,
-            expires: DateTime.UtcNow.AddMinutes(60)
+            expires: DateTime.UtcNow.AddMinutes(160)
         );
         //return jwt en base64
         return new JwtSecurityTokenHandler().WriteToken(token);
