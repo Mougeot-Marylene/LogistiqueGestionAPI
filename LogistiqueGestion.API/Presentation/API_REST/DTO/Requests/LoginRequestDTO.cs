@@ -9,9 +9,9 @@ public class LoginRequestDto
     public required string Password { get; set; }
 }
 
-public class LoginRequestDTOValidator : AbstractValidator<LoginRequestDto>
+public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
 {
-    public LoginRequestDTOValidator()
+    public LoginRequestDtoValidator()
     {
         RuleFor(r => r.Username).NotEmpty();
         RuleFor(r => r.Password).NotEmpty();
