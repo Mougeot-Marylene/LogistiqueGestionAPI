@@ -32,7 +32,7 @@ public class SecurityService : ISecurityService
         throw new AuthenticationException("Connexion échouée");
     }
 
-    private string GenerateJwtToken(string username, List<string> roles)
+    private static string GenerateJwtToken(string username, List<string> roles)
     {
         //Liste des claims 
         List<Claim> claims = new List<Claim>()
