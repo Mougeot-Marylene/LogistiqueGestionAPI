@@ -28,19 +28,25 @@ public class FixtureIntegration : IClassFixture<APIFactory>
 
     public async Task Login(string Role)
     {
-        LoginRequestDto request = new();
+        LoginRequestDto request;
 
         if (Role == "Admin")
         {
-            request.Username = "admin";
-            request.Password = "admin";
+            request = new LoginRequestDto
+            {
+                Username = "admin",
+                Password = "admin"
+            };
             //request.Username = "marie.dupont@test.fr";
             //request.Password = "123456";
         }
         else
         {
-            request.Username = "user";
-            request.Password = "user";
+            request = new LoginRequestDto
+            {
+                Username = "user",
+                Password = "user"
+            };
             //request.Username = "marylene.m39@gmail.com";
             //request.Password = "123456";
         }
