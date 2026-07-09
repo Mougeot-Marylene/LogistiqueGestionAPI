@@ -27,9 +27,14 @@ public class ProduitsController : APIBaseController
         IEnumerable<Produit> produits = await _produitService.GetProductsAsync();
 
         //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)
-       var username = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        var username = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-       var items = produits.Select(produits => new GetProduitsItemDTOResponse() 
+        if (username is null)
+        {
+            return Unauthorized();
+        }
+
+        var items = produits.Select(produits => new GetProduitsItemDTOResponse() 
         { 
             Id = produits.Id,  
             Nom = produits.Nom,
@@ -39,7 +44,7 @@ public class ProduitsController : APIBaseController
             Categorie = produits.Categorie,
         });
 
-        var response = new GetProduitsDTOResponse() 
+        var response = new GetProduitsDtoResponse() 
         { 
              Items = items       
         };
@@ -50,12 +55,12 @@ public class ProduitsController : APIBaseController
 
     [HttpPut("{id}")]
     [Authorize(Roles = "USER")]
-    public async Task<IActionResult> UpdateProduit([FromRoute] int id, [FromBody] UpdateProduitDTORequest request)
+    public async Task<IActionResult> UpdateProduit([FromRoute] int id, [FromBody] UpdateProduitDtoRequest request)
     {
         try
         {
             // Verification DTO Requete
-            var error = ValidateRequest<UpdateProduitDTORequestValidator, UpdateProduitDTORequest>(request);
+            var error = ValidateRequest<UpdateProduitDtoRequestValidator, UpdateProduitDtoRequest>(request);
 
             if (error != null) return error;
 
@@ -70,7 +75,7 @@ public class ProduitsController : APIBaseController
             var produitModifie = await _produitService.UpdateProductAsync(produit);
 
             //BO(s) -> DTO Reponse
-            UpdateProduitDTOResponse response = new()
+            UpdateProduitDtoResponse response = new()
             {
                 Id = produitModifie.Id,
                 Quantite = produitModifie.Quantite,

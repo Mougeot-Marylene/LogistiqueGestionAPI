@@ -33,7 +33,7 @@ public class ProduitsControllerTests : FixtureIntegration
 
 
 
-        var expected = new GetProduitsDTOResponse()
+        var expected = new GetProduitsDtoResponse()
         {
             Items = new List<GetProduitsItemDTOResponse>()
             {
@@ -50,7 +50,7 @@ public class ProduitsControllerTests : FixtureIntegration
 
         
 
-        var actual = await HttpClient.GetFromJsonAsync<GetProduitsDTOResponse>("/api/produits");
+        var actual = await HttpClient.GetFromJsonAsync<GetProduitsDtoResponse>("/api/produits");
 
         //Assert
         Assert.Equivalent(expected, actual);

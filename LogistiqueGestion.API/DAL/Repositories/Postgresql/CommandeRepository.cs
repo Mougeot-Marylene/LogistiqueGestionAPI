@@ -45,7 +45,13 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
                         join utilisateurs u on c.utilisateur_id = u.id
                         where c.id = @id";
 
-        return await _db.Connection.QueryFirstOrDefaultAsync<Commande>(query, new { id = id }, transaction: _db.TransactionSql);
+        Commande? commande = await _db.Connection.QueryFirstOrDefaultAsync<Commande>(query, new { id = id }, transaction: _db.TransactionSql);
+        if (commande is null)
+        {
+            throw new KeyNotFoundException($"Commande avec l'id {id} introuvable.");
+        }
+
+        return commande;
 
     }
 

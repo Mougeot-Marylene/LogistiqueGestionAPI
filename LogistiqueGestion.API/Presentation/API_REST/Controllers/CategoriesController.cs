@@ -29,7 +29,7 @@ public class CategoriesController : APIBaseController
         });
 
         // Construction du DTO de réponse global, qui contient la liste des items mappés
-        var response = new GetCategorieDTOResponse()
+        var response = new GetCategorieDtoResponse()
         {
             Items = items
         };

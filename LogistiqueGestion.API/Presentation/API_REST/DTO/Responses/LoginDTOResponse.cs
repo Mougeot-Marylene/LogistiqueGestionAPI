@@ -1,6 +1,6 @@
 ﻿namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 
-public class LoginDTOResponse
+public class LoginDtoResponse
 {
-    public string Access_token {get; set;}
+    public required string Access_token {get; set;}
 }

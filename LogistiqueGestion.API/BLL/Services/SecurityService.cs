@@ -1,6 +1,7 @@
 ﻿using LogistiqueGestion.API.BLL.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 
@@ -28,7 +29,7 @@ public class SecurityService : ISecurityService
             // et on récupère l'utilisateur avec ses rôles
             return GenerateJwtToken(username, new List<string>() { "USER" });
         }
-        throw new Exception("Connexion échouée");
+        throw new AuthenticationException("Connexion échouée");
     }
 
     private string GenerateJwtToken(string username, List<string> roles)

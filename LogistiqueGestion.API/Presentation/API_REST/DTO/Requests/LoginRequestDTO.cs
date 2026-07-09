@@ -2,14 +2,14 @@
 
 namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
 
-public class LoginRequestDTO
+public class LoginRequestDto
 {
 
-    public string Username { get; set; }
-    public string Password { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
 }
 
-public class LoginRequestDTOValidator : AbstractValidator<LoginRequestDTO>
+public class LoginRequestDTOValidator : AbstractValidator<LoginRequestDto>
 {
     public LoginRequestDTOValidator()
     {

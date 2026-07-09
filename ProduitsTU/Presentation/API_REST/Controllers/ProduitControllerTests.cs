@@ -82,7 +82,7 @@ public class ProduitControllerTests
 
 
         // Construction de la réponse DTO attendue, à partir des produits (mapping manuel)
-        GetProduitsDTOResponse expectedResponseBody = new GetProduitsDTOResponse()
+        GetProduitsDtoResponse expectedResponseBody = new GetProduitsDtoResponse()
         {
             Items = new List<GetProduitsItemDTOResponse>()
             {
@@ -142,8 +142,8 @@ public class ProduitControllerTests
         Mock.Get(produitServiceMock).Verify(); //spi vérification (vérifie que le mock a bien été appelé 1 fois)
         Assert.IsType<OkObjectResult>(actionResult); //code 200 ?
         OkObjectResult okObjectResult = (OkObjectResult)actionResult; // Cast pour accéder au contenu de la réponse
-        Assert.IsType<GetProduitsDTOResponse>(okObjectResult.Value); // Vérifie que le contenu est bien du bon type DTO
-        GetProduitsDTOResponse actualBody = (GetProduitsDTOResponse)okObjectResult.Value; // Cast du contenu réel
+        Assert.IsType<GetProduitsDtoResponse>(okObjectResult.Value); // Vérifie que le contenu est bien du bon type DTO
+        GetProduitsDtoResponse actualBody = (GetProduitsDtoResponse)okObjectResult.Value; // Cast du contenu réel
         Assert.Equivalent(expectedResponseBody.Items, actualBody.Items); // vérifie si le dto à la bonne liste
 
     }

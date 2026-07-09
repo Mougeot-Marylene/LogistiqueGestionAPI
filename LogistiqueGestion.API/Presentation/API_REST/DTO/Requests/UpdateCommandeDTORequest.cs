@@ -2,13 +2,13 @@
 
 namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
 
-public class UpdateCommandeDTORequest
+public class UpdateCommandeDtoRequest
 {
     public int Statut {  get; set; }
 }
 
 
-public class UpdateCommandeDTORequestValdidator : AbstractValidator<UpdateCommandeDTORequest>
+public class UpdateCommandeDTORequestValdidator : AbstractValidator<UpdateCommandeDtoRequest>
 {
     public UpdateCommandeDTORequestValdidator()
     {

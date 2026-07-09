@@ -2,7 +2,7 @@
 
 namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 
-public class GetCategorieDTOResponse
+public class GetCategorieDtoResponse
 {
     public IEnumerable<GetCategoriesItemDTOResponse> Items { get; set; }
 }

@@ -30,7 +30,7 @@ public class CommandesController : APIBaseController
 			PrenomUtilisateur = commandes.PrenomUtilisateur
 		});
 
-		var response = new GetCommandesDTOResponse()
+		var response = new GetCommandesDtoResponse()
 		{
 			Items = items
 		};
@@ -43,19 +43,23 @@ public class CommandesController : APIBaseController
 	public async Task<IActionResult> GetCommandeAsync([FromRoute]int id)
 	{
 		if (id <= 0) return BadRequest();
-
-		var commande = await _commandeService.GetCommandeAsync(id);
-
-        if (commande == null) return NotFound();
-        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
-        var response = new GetCOmmandesItemDTOResponse()
+        try
         {
-            Id = commande.Id,
-            Statut = commande.Statut,
-            NomUtilisateur = commande.NomUtilisateur,
-            PrenomUtilisateur = commande.PrenomUtilisateur
-        };;
+            var commande = await _commandeService.GetCommandeAsync(id);
 
-		return Ok(response);
-	}
+            var response = new GetCOmmandesItemDTOResponse()
+            {
+                Id = commande.Id,
+                Statut = commande.Statut,
+                NomUtilisateur = commande.NomUtilisateur,
+                PrenomUtilisateur = commande.PrenomUtilisateur
+            };
+            return Ok(response);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
+    }
 }

@@ -2,15 +2,15 @@
 
 namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
 
-public class UpdateProduitDTORequest
+public class UpdateProduitDtoRequest
 {
     public int Quantite { get; set; }
 }
 
 //Validateur
-public class UpdateProduitDTORequestValidator : AbstractValidator<UpdateProduitDTORequest>
+public class UpdateProduitDtoRequestValidator : AbstractValidator<UpdateProduitDtoRequest>
 {
-    public UpdateProduitDTORequestValidator()
+    public UpdateProduitDtoRequestValidator()
     {
         //Les règles
         RuleFor(updateProduitDTORequest => updateProduitDTORequest.Quantite)

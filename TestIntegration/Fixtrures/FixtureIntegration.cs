@@ -28,7 +28,7 @@ public class FixtureIntegration : IClassFixture<APIFactory>
 
     public async Task Login(string Role)
     {
-        LoginRequestDTO request = new();
+        LoginRequestDto request = new();
 
         if (Role == "Admin")
         {
@@ -45,11 +45,11 @@ public class FixtureIntegration : IClassFixture<APIFactory>
             //request.Password = "123456";
         }
 
-        var rep = await HttpClient.PostAsJsonAsync<LoginRequestDTO>("/api/login", request);
+        var rep = await HttpClient.PostAsJsonAsync<LoginRequestDto>("/api/login", request);
 
         Assert.True(rep.IsSuccessStatusCode, $"Login fail with Username: {request.Username} Password: {request.Password}");
 
-        var token = await rep.Content.ReadFromJsonAsync<LoginDTOResponse>();
+        var token = await rep.Content.ReadFromJsonAsync<LoginDtoResponse>();
 
         Assert.NotNull(token);
         Assert.NotEmpty(token.Access_token);

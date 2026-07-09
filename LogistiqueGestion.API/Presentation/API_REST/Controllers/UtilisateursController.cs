@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LogistiqueGestion.API.Presentation.API_REST.Controllers;
 
+[Route("api")]
 public class UtilisateursController : APIBaseController
 {
     private readonly ISecurityService _securityService;
@@ -15,10 +16,10 @@ public class UtilisateursController : APIBaseController
 
 
     [AllowAnonymous]
-    [HttpPost("/api/login")]
-    public IActionResult Login([FromBody]LoginRequestDTO loginRequestDTO)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody]LoginRequestDto loginRequestDTO)
     {
-       var error = ValidateRequest<LoginRequestDTOValidator, LoginRequestDTO>(loginRequestDTO);
+       var error = ValidateRequest<LoginRequestDTOValidator, LoginRequestDto>(loginRequestDTO);
 
         if (error != null) return error;
 
@@ -28,7 +29,7 @@ public class UtilisateursController : APIBaseController
 
             return Ok(new{ access_token = token});
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
             return Unauthorized();
