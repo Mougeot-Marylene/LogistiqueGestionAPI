@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Npgsql;
 using System.Data;
+using System.Transactions;
 
 namespace LogistiqueGestion.API.DAL;
 
@@ -43,5 +44,11 @@ public class Session : ISession
 
         Connection.Open();
 
+    }
+
+    public void Dispose()
+    {
+        TransactionSql?.Dispose();
+        Connection.Dispose();
     }
 }

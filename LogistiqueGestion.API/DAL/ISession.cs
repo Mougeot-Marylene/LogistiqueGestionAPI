@@ -2,7 +2,7 @@
 
 namespace LogistiqueGestion.API.DAL
 {
-    public interface ISession
+    public interface ISession : IDisposable
     {
         EDBType EDBType { get; }
         IDbConnection Connection { get; }
