@@ -35,7 +35,7 @@ public class LigneCommandeRepository : ILigneCommandeRepository
                     JOIN commandes c ON c.id = cp.commande_id 
                     JOIN utilisateurs u ON u.id = c.utilisateur_id 
                     WHERE c.statut_commandes_id = 1
-                    ORDER BY p.id, c.id;";
+                    ORDER BY c.id, p.id;";
 
 
         return await _db.Connection.QueryAsync<LigneCommande>(query, transaction: _db.TransactionSql);
