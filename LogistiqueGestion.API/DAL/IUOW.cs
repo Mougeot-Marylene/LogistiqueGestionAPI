@@ -7,6 +7,7 @@ public interface IUOW
     public IProduitRepository Produits { get; }
     public ICategorieRepository Categories { get; }
     public ICommandeRepository Commande { get; }
+    public ILigneCommandeRepository LigneCommande { get; }
 
     /// <summary>
     /// Démarre une transaction

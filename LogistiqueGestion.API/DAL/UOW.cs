@@ -19,6 +19,7 @@ public class UOW : IUOW, IDisposable
     public ICategorieRepository Categories => CurrrentDictionnary.GetValueOrDefault(typeof(ICategorieRepository)) as ICategorieRepository;
 
     public ICommandeRepository Commande => CurrrentDictionnary.GetValueOrDefault(typeof(ICommandeRepository)) as ICommandeRepository;
+    public ILigneCommandeRepository LigneCommande => CurrrentDictionnary.GetValueOrDefault(typeof(ILigneCommandeRepository)) as ILigneCommandeRepository;
 
     public UOW(String connectionString, EDBType eDBType)
     {
@@ -30,7 +31,8 @@ public class UOW : IUOW, IDisposable
                 CurrrentDictionnary = new Dictionary<Type, object> {
                     {typeof(IProduitRepository), new ProduitRepositoryPostgresql(_session) },
                     {typeof(ICategorieRepository), new CategorieRepositoryPostgresql(_session) },
-                    {typeof(ICommandeRepository), new CommandeRepositoryPostgresql(_session) }
+                    {typeof(ICommandeRepository), new CommandeRepositoryPostgresql(_session) },
+                    {typeof(ILigneCommandeRepository), new LigneCommandeRepository(_session) }
                 };
                 break;
         }
