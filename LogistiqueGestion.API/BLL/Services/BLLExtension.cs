@@ -13,5 +13,7 @@ public static class BLLExtension
         services.AddTransient<ICategorieService, CategorieService>();
         services.AddTransient<ICommandeService, CommandeService>();
         services.AddTransient<ISecurityService, SecurityService>();
+        services.AddTransient<ILigneCommandeService,  LigneCommandeService>();
+
     }
 }

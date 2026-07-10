@@ -4,7 +4,7 @@ namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Requests;
 
 public class UpdateCommandeDtoRequest
 {
-    public int Statut {  get; set; }
+    public bool EstRamasse { get; set; }
 }
 
 
@@ -12,7 +12,7 @@ public class UpdateCommandeDTORequestValdidator : AbstractValidator<UpdateComman
 {
     public UpdateCommandeDTORequestValdidator()
     {
-        RuleFor(updateCommandeDTORequest => updateCommandeDTORequest.Statut)
+        RuleFor(updateCommandeDTORequest => updateCommandeDTORequest.EstRamasse)
             .NotNull()
             .NotEmpty();
     }

@@ -19,7 +19,7 @@ public class UtilisateursController : APIBaseController
     [HttpPost("login")]
     public IActionResult Login([FromBody]LoginRequestDto loginRequestDTO)
     {
-       var error = ValidateRequest<LoginRequestDTOValidator, LoginRequestDto>(loginRequestDTO);
+       var error = ValidateRequest<LoginRequestDtoValidator, LoginRequestDto>(loginRequestDTO);
 
         if (error != null) return error;
 
