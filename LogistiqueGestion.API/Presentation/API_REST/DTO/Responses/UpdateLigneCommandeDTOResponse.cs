@@ -1,10 +1,8 @@
-﻿using Domain.Domaine.Entities;
+﻿namespace LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
 
-namespace LogistiqueGestion.API.Domain.Entities;
-
-public class LigneCommande : Entity
+public class UpdateLigneCommandeDTOResponse
 {
-    public int Id { get; set; }
+    public int Id {  get; set; }
     public int CommandeId { get; set; }
     public int ProduitId { get; set; }
     public string? NomProduit { get; set; }
@@ -13,6 +11,4 @@ public class LigneCommande : Entity
     public bool EstEmballe { get; set; }
     public string? NomClient { get; set; }
     public string? PrenomClient { get; set; }
-
-
 }

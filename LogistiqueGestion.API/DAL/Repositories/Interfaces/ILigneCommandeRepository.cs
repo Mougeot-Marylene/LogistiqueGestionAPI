@@ -6,4 +6,5 @@ namespace LogistiqueGestion.API.DAL.Repositories.Interfaces;
 
 public interface ILigneCommandeRepository : IReadRepository<LigneCommande, int>, IWriteRepository<LigneCommande, int>
 {
+    
 }

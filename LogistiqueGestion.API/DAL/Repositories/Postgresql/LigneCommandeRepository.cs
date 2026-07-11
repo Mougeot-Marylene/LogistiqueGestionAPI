@@ -2,6 +2,7 @@
 using Domain.Domaine.Entities;
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Domain.Entities;
+using LogistiqueGestion.API.Domain.Exceptions;
 
 namespace LogistiqueGestion.API.DAL.Repositories.Postgresql;
 
@@ -22,8 +23,10 @@ public class LigneCommandeRepository : ILigneCommandeRepository
     public async Task<IEnumerable<LigneCommande>> GetAllAsync()
     {
         var query = @"SELECT 
+                        cp.id,
                         c.id AS CommandeId, 
                         cp.estramasse AS EstRamasse,
+                        cp.estemballe AS EstEmballe,
                         p.id AS ProduitId,
                         p.nom AS NomProduit,
                         cp.quantite,
@@ -41,13 +44,49 @@ public class LigneCommandeRepository : ILigneCommandeRepository
         return await _db.Connection.QueryAsync<LigneCommande>(query, transaction: _db.TransactionSql);
     }
 
-    public Task<LigneCommande> GetAsync(int id)
+    public async Task<LigneCommande> GetAsync(int id)
     {
-        throw new NotImplementedException();
+        string query = @"SELECT 
+                            cp.id,
+                            c.id AS CommandeId, 
+                            cp.estramasse AS EstRamasse,
+                            cp.estemballe AS EstEmballe,
+                            p.id AS ProduitId,
+                            p.nom AS NomProduit,
+                            cp.quantite,
+                            SUM(cp.quantite) OVER (PARTITION BY p.id) AS QuantiteTotaleProduit,
+                            u.nom AS NomClient,
+                            u.prenom AS PrenomClient
+                        FROM commande_produit cp   
+                        JOIN produits p ON cp.produit_id = p.id 
+                        JOIN commandes c ON c.id = cp.commande_id 
+                        JOIN utilisateurs u ON u.id = c.utilisateur_id 
+                        WHERE c.statut_commandes_id = 1 and cp.commande_id = @id;";
+
+
+        LigneCommande? ligneCommande = await _db.Connection.QueryFirstOrDefaultAsync<LigneCommande>(query, new { id = id }, transaction: _db.TransactionSql);
+        if (ligneCommande is null)
+        {
+            throw new KeyNotFoundException($"Commande avec l'id {id} introuvable.");
+        }
+
+        return ligneCommande;
+
     }
 
-    public Task<LigneCommande> Update(LigneCommande entity)
+    public async Task<LigneCommande> Update(LigneCommande entity)
     {
-        throw new NotImplementedException();
+        string query = "UPDATE commande_produit SET estramasse = @EstRamasse, estemballe = @EstEmballe WHERE id=@id; ";
+
+        int res = await _db.Connection.ExecuteAsync(query, entity);
+
+        if (res == 0)
+        {
+            throw new NotFoundEntityException(nameof(LigneCommande), entity.CommandeId);
+        }
+
+        return entity;
     }
+
+   
 }
