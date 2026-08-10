@@ -63,7 +63,7 @@ CREATE TABLE commandes (
     id SERIAL PRIMARY KEY,
     utilisateur_id INT REFERENCES utilisateurs(id) ON DELETE CASCADE,
     date_creation TIMESTAMP DEFAULT NOW() NOT NULL,
-    statut_comma INT REFERENCES statut_commandes(id)
+    statut_commandes_id INT REFERENCES statut_commandes(id)
 );
 
 CREATE TABLE tailles (

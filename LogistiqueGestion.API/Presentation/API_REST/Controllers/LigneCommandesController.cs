@@ -18,7 +18,10 @@ public class LigneCommandesController : APIBaseController
 		_LigneCommandeService = ligneCommandeService;
 	}
 
-	public async Task<IActionResult> GetAll()
+
+    [AllowAnonymous]
+    [HttpGet("EnAttente")]
+    public async Task<IActionResult> GetAll()
 	{
 		IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesAsync();
 
@@ -41,6 +44,33 @@ public class LigneCommandesController : APIBaseController
 		};
 
 		return Ok(response);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("EnEnvoie")]
+    public async Task<IActionResult> GetAllEnvoie()
+    {
+        IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesEnvoieAsync();
+
+        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
+        {
+            Id = ligneCommandes.Id,
+            CommandeId = ligneCommandes.CommandeId,
+            ProduitId = ligneCommandes.ProduitId,
+            NomProduit = ligneCommandes.NomProduit,
+            Quantite = ligneCommandes.Quantite,
+            EstRamasse = ligneCommandes.EstRamasse,
+            EstEmballe = ligneCommandes.EstEmballe,
+            NomClient = ligneCommandes.NomClient,
+            PrenomClient = ligneCommandes.PrenomClient
+        });
+
+        var response = new GetLigneCommandeDtoResponse()
+        {
+            Items = items
+        };
+
+        return Ok(response);
     }
 
     [HttpGet("{id}")]

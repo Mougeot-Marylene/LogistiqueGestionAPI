@@ -18,6 +18,9 @@ public interface IReadRepository<E, Pk> where E : Entity
     public Task<IEnumerable<E>> GetAllAsync();
 
 
+    public Task<IEnumerable<E>> GetAllEnvoieAsync();
+
+
     /// <summary>
     /// Recupère une entité dans la BDD.
     /// </summary>

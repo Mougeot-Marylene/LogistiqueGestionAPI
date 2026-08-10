@@ -34,6 +34,11 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
 
     }
 
+    public Task<IEnumerable<Commande>> GetAllEnvoieAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Commande> GetAsync(int id)
     {
         string query = @"select 

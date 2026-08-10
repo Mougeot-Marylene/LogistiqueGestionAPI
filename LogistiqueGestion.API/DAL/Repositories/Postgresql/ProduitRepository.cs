@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Domain.Domaine.Entities;
-using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Domain.Exceptions;
 
@@ -95,4 +94,8 @@ public class ProduitRepositoryPostgresql : IProduitRepository
         throw new NotImplementedException();
     }
 
+    public Task<IEnumerable<Produit>> GetAllEnvoieAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
