@@ -2,6 +2,7 @@
 using LogistiqueGestion.API.BLL.Services.Interfaces;
 using LogistiqueGestion.API.Domain.Entities;
 using LogistiqueGestion.API.Presentation.API_REST.DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
 
@@ -16,7 +17,8 @@ public class CommandesController : APIBaseController
 		_commandeService = commandeService;
 	}
 
-	[HttpGet]
+    [AllowAnonymous]
+    [HttpGet]
 	public async Task<IActionResult> GetAll()
 	{
 		//Appel de la logique métier
@@ -63,5 +65,107 @@ public class CommandesController : APIBaseController
         {
             return NotFound();
         }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("EnAttente")]
+    public async Task<IActionResult> GetAllAttente()
+    {
+        //Appel de la logique métier
+        IEnumerable<Commande> commandes = await _commandeService.GetAllAttenteAsync();
+
+        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
+        var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse()
+        {
+            Id = commandes.Id,
+            Statut = commandes.Statut,
+            NomUtilisateur = commandes.NomUtilisateur,
+            PrenomUtilisateur = commandes.PrenomUtilisateur
+        });
+
+        var response = new GetCommandesDtoResponse()
+        {
+            Items = items
+        };
+
+        //DTO Reponse + code HTTP 200
+        return Ok(response);
+    }
+
+
+    [AllowAnonymous]
+    [HttpGet("Preparation")]
+    public async Task<IActionResult> GetAllPreparation()
+    {
+        //Appel de la logique métier
+        IEnumerable<Commande> commandes = await _commandeService.GetAllPreparationAsync();
+
+        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
+        var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse()
+        {
+            Id = commandes.Id,
+            Statut = commandes.Statut,
+            NomUtilisateur = commandes.NomUtilisateur,
+            PrenomUtilisateur = commandes.PrenomUtilisateur
+        });
+
+        var response = new GetCommandesDtoResponse()
+        {
+            Items = items
+        };
+
+        //DTO Reponse + code HTTP 200
+        return Ok(response);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("Finalise")]
+    public async Task<IActionResult> GetAllFinalise()
+    {
+        //Appel de la logique métier
+        IEnumerable<Commande> commandes = await _commandeService.GetAllFinaliseAsync();
+
+        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
+        var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse()
+        {
+            Id = commandes.Id,
+            Statut = commandes.Statut,
+            NomUtilisateur = commandes.NomUtilisateur,
+            PrenomUtilisateur = commandes.PrenomUtilisateur
+        });
+
+        var response = new GetCommandesDtoResponse()
+        {
+            Items = items
+        };
+
+        //DTO Reponse + code HTTP 200
+        return Ok(response);
+    }
+
+
+    [AllowAnonymous]
+    [HttpGet("EnEnvoie")]
+    public async Task<IActionResult> GetAllEnvoie()
+    {
+        //Appel de la logique métier
+        IEnumerable<Commande> commandes = await _commandeService.GetAllEnvoieAsync();
+
+        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
+        var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse()
+        {
+            Id = commandes.Id,
+            Statut = commandes.Statut,
+            NomUtilisateur = commandes.NomUtilisateur,
+            PrenomUtilisateur = commandes.PrenomUtilisateur
+        });
+
+        var response = new GetCommandesDtoResponse()
+        {
+            Items = items
+        };
+
+        //DTO Reponse + code HTTP 200
+        return Ok(response);
     }
 }

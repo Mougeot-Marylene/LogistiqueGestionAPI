@@ -20,6 +20,7 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
         throw new NotImplementedException();
     }
 
+    // recup toutes les commandes
     public async Task<IEnumerable<Commande>> GetAllAsync()
     {
         string query = @"SELECT 
@@ -34,9 +35,70 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
 
     }
 
-    public Task<IEnumerable<Commande>> GetAllEnvoieAsync()
+    // récup commandes en attente
+    public async Task<IEnumerable<Commande>> GetAllAttenteAsync()
     {
-        throw new NotImplementedException();
+        string query = @"SELECT 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
+                        join utilisateurs u on c.utilisateur_id = u.id 
+                    WHERE c.statut_commandes_id = 1
+                    ORDER BY c.id";
+
+        return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
+    }
+
+
+    // récup comamnde en préparation
+    public async Task<IEnumerable<Commande>> GetAllPreparationAsync()
+    {
+        string query = @"SELECT 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
+                        join utilisateurs u on c.utilisateur_id = u.id 
+                    WHERE c.statut_commandes_id = 2
+                    ORDER BY c.id";
+
+        return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
+    }
+
+
+    // récup comamnde finalisée
+    public async Task<IEnumerable<Commande>> GetAllFinaliseAsync()
+    {
+        string query = @"SELECT 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
+                        join utilisateurs u on c.utilisateur_id = u.id 
+                    WHERE c.statut_commandes_id = 3
+                    ORDER BY c.id";
+
+        return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
+    }
+
+    // récup comamnde en envoie
+    public async Task<IEnumerable<Commande>> GetAllEnvoieAsync()
+    {
+        string query = @"SELECT 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
+                        join utilisateurs u on c.utilisateur_id = u.id 
+                    WHERE c.statut_commandes_id = 4
+                    ORDER BY c.id";
+
+        return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
     }
 
     public async Task<Commande> GetAsync(int id)
@@ -64,4 +126,5 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
     {
         throw new NotImplementedException();
     }
+
 }

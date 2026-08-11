@@ -15,4 +15,6 @@ public class GetLigneCommandeItemsDtoResponse
     public bool EstEmballe { get; set; }
     public string? NomClient { get; set; }
     public string? PrenomClient { get; set; }
+    public decimal PrixTotal { get; set; }
+    public string Date { get; set; } = string.Empty;
 }

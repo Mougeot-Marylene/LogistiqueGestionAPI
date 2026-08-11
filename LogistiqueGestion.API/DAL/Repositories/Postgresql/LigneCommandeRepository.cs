@@ -2,8 +2,6 @@
 using LogistiqueGestion.API.DAL.Repositories.Interfaces;
 using LogistiqueGestion.API.Domain.Entities;
 using LogistiqueGestion.API.Domain.Exceptions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace LogistiqueGestion.API.DAL.Repositories.Postgresql;
 
@@ -26,13 +24,40 @@ public class LigneCommandeRepository : ILigneCommandeRepository
     {
         var query = @"SELECT 
                         cp.id,
-                        c.id AS CommandeId, 
+                        c.id AS CommandeId,
+                        c.date_creation AS Date,
                         cp.estramasse AS EstRamasse,
                         cp.estemballe AS EstEmballe,
                         p.id AS ProduitId,
                         p.nom AS NomProduit,
                         cp.quantite,
                         SUM(cp.quantite) OVER (PARTITION BY p.id) AS QuantiteTotaleProduit,
+                        p.prix * cp.quantite AS PrixTotal,
+                        u.nom AS NomClient,
+                        u.prenom AS PrenomClient
+                    FROM commande_produit cp   
+                    JOIN produits p ON cp.produit_id = p.id 
+                    JOIN commandes c ON c.id = cp.commande_id 
+                    JOIN utilisateurs u ON u.id = c.utilisateur_id 
+                    ORDER BY c.id, p.id;";
+
+
+        return await _db.Connection.QueryAsync<LigneCommande>(query, transaction: _db.TransactionSql);
+    }
+
+    public async Task<IEnumerable<LigneCommande>> GetAllAttenteAsync()
+    {
+        var query = @"SELECT 
+                        cp.id,
+                        c.id AS CommandeId, 
+                        c.date_creation AS Date,
+                        cp.estramasse AS EstRamasse,
+                        cp.estemballe AS EstEmballe,
+                        p.id AS ProduitId,
+                        p.nom AS NomProduit,
+                        cp.quantite,
+                        SUM(cp.quantite) OVER (PARTITION BY p.id) AS QuantiteTotaleProduit,
+                        p.prix * cp.quantite AS PrixTotal,
                         u.nom AS NomClient,
                         u.prenom AS PrenomClient
                     FROM commande_produit cp   
@@ -51,12 +76,14 @@ public class LigneCommandeRepository : ILigneCommandeRepository
         var query = @"SELECT 
                         cp.id,
                         c.id AS CommandeId, 
+                        c.date_creation AS Date,
                         cp.estramasse AS EstRamasse,
                         cp.estemballe AS EstEmballe,
                         p.id AS ProduitId,
                         p.nom AS NomProduit,
                         cp.quantite,
                         SUM(cp.quantite) OVER (PARTITION BY p.id) AS QuantiteTotaleProduit,
+                        p.prix * cp.quantite AS PrixTotal,
                         u.nom AS NomClient,
                         u.prenom AS PrenomClient
                     FROM commande_produit cp   
@@ -64,6 +91,32 @@ public class LigneCommandeRepository : ILigneCommandeRepository
                     JOIN commandes c ON c.id = cp.commande_id 
                     JOIN utilisateurs u ON u.id = c.utilisateur_id 
                     WHERE c.statut_commandes_id = 4
+                    ORDER BY c.id, p.id;";
+
+
+        return await _db.Connection.QueryAsync<LigneCommande>(query, transaction: _db.TransactionSql);
+    }
+
+    public async Task<IEnumerable<LigneCommande>> GetAllFinaliseAsync()
+    {
+        var query = @"SELECT 
+                        cp.id,
+                        c.id AS CommandeId, 
+                        c.date_creation AS Date,
+                        cp.estramasse AS EstRamasse,
+                        cp.estemballe AS EstEmballe,
+                        p.id AS ProduitId,
+                        p.nom AS NomProduit,
+                        cp.quantite,
+                        SUM(cp.quantite) OVER (PARTITION BY p.id) AS QuantiteTotaleProduit,
+                        p.prix * cp.quantite AS PrixTotal,
+                        u.nom AS NomClient,
+                        u.prenom AS PrenomClient
+                    FROM commande_produit cp   
+                    JOIN produits p ON cp.produit_id = p.id 
+                    JOIN commandes c ON c.id = cp.commande_id 
+                    JOIN utilisateurs u ON u.id = c.utilisateur_id 
+                    WHERE c.statut_commandes_id = 3
                     ORDER BY c.id, p.id;";
 
 

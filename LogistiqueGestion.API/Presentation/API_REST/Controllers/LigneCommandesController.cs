@@ -20,7 +20,6 @@ public class LigneCommandesController : APIBaseController
 
 
     [AllowAnonymous]
-    [HttpGet("EnAttente")]
     public async Task<IActionResult> GetAll()
 	{
 		IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesAsync();
@@ -32,11 +31,14 @@ public class LigneCommandesController : APIBaseController
 			ProduitId = ligneCommandes.ProduitId,
 			NomProduit = ligneCommandes.NomProduit,
 			Quantite = ligneCommandes.Quantite,
+            PrixTotal = ligneCommandes.PrixTotal,
 			EstRamasse = ligneCommandes.EstRamasse,
             EstEmballe = ligneCommandes.EstEmballe,
 			NomClient = ligneCommandes.NomClient,
-			PrenomClient = ligneCommandes.PrenomClient
-		});
+			PrenomClient = ligneCommandes.PrenomClient,
+            // Format : dd-MM-yyyy
+            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
+        });
 
 		var response = new GetLigneCommandeDtoResponse()
 		{
@@ -44,6 +46,36 @@ public class LigneCommandesController : APIBaseController
 		};
 
 		return Ok(response);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("EnAttente")]
+    public async Task<IActionResult> GetAllAttente()
+    {
+        IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesAttenteAsync();
+
+        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
+        {
+            Id = ligneCommandes.Id,
+            CommandeId = ligneCommandes.CommandeId,
+            ProduitId = ligneCommandes.ProduitId,
+            NomProduit = ligneCommandes.NomProduit,
+            Quantite = ligneCommandes.Quantite,
+            PrixTotal = ligneCommandes.PrixTotal,
+            EstRamasse = ligneCommandes.EstRamasse,
+            EstEmballe = ligneCommandes.EstEmballe,
+            NomClient = ligneCommandes.NomClient,
+            PrenomClient = ligneCommandes.PrenomClient,
+            // Format : dd-MM-yyyy
+            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
+        });
+
+        var response = new GetLigneCommandeDtoResponse()
+        {
+            Items = items
+        };
+
+        return Ok(response);
     }
 
     [AllowAnonymous]
@@ -59,10 +91,14 @@ public class LigneCommandesController : APIBaseController
             ProduitId = ligneCommandes.ProduitId,
             NomProduit = ligneCommandes.NomProduit,
             Quantite = ligneCommandes.Quantite,
+            PrixTotal = ligneCommandes.PrixTotal,
             EstRamasse = ligneCommandes.EstRamasse,
             EstEmballe = ligneCommandes.EstEmballe,
             NomClient = ligneCommandes.NomClient,
-            PrenomClient = ligneCommandes.PrenomClient
+            PrenomClient = ligneCommandes.PrenomClient,
+            // Format : dd-MM-yyyy
+            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
+
         });
 
         var response = new GetLigneCommandeDtoResponse()
@@ -91,9 +127,12 @@ public class LigneCommandesController : APIBaseController
                 ProduitId = ligneCommande.ProduitId,
                 NomProduit = ligneCommande.NomProduit,
                 Quantite = ligneCommande.Quantite,
+                PrixTotal = ligneCommande.PrixTotal,
                 EstRamasse = ligneCommande.EstRamasse,
                 NomClient = ligneCommande.NomClient,
-                PrenomClient = ligneCommande.PrenomClient
+                PrenomClient = ligneCommande.PrenomClient,
+                // Format : dd-MM-yyyy
+                Date = ligneCommande.Date.ToString("dd-MM-yyyy")
             };
             return Ok(response);
         }

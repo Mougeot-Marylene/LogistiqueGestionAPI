@@ -94,8 +94,4 @@ public class ProduitRepositoryPostgresql : IProduitRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Produit>> GetAllEnvoieAsync()
-    {
-        throw new NotImplementedException();
-    }
 }

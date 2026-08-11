@@ -20,10 +20,6 @@ public class CategorieRepositoryPostgresql : ICategorieRepository
         return await _db.Connection.QueryAsync<Categorie>(query, transaction: _db.TransactionSql);
     }
 
-    public Task<IEnumerable<Categorie>> GetAllEnvoieAsync()
-    {
-        throw new NotImplementedException();
-    }
 
     public Task<Categorie> GetAsync(int id)
     {

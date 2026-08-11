@@ -6,5 +6,7 @@ namespace LogistiqueGestion.API.DAL.Repositories.Interfaces;
 
 public interface ILigneCommandeRepository : IReadRepository<LigneCommande, int>, IWriteRepository<LigneCommande, int>
 {
-    
+    Task<IEnumerable<LigneCommande>> GetAllAttenteAsync();
+    Task<IEnumerable<LigneCommande>> GetAllEnvoieAsync();
+    Task<IEnumerable<LigneCommande>> GetAllFinaliseAsync();
 }

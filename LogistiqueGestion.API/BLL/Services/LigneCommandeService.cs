@@ -27,14 +27,18 @@ public class LigneCommandeService : ILigneCommandeService
        return await _db.LigneCommande.GetAllAsync();
     }
 
-
-    /// <summary>
-    /// Récupèrer toutes les lignes de commandes en envoie pour l'inventaire
-    /// </summary>
-    /// <returns>Toutes les lignes de commandes en envoie</returns>
+    public async Task<IEnumerable<LigneCommande>> GetLigneCommandesAttenteAsync()
+    {
+        return await _db.LigneCommande.GetAllAttenteAsync();
+    }
     public async Task<IEnumerable<LigneCommande>> GetLigneCommandesEnvoieAsync()
     {
         return await _db.LigneCommande.GetAllEnvoieAsync();
+    }
+
+    public async Task<IEnumerable<LigneCommande>> GetLigneCommandesFinaliseAsync()
+    {
+        return await _db.LigneCommande.GetAllFinaliseAsync();
     }
 
     public async Task<LigneCommande> UpdateLigneCommandeAsync(LigneCommande ligneCommande)
