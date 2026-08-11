@@ -119,6 +119,32 @@ public class CommandesController : APIBaseController
     }
 
     [AllowAnonymous]
+    [HttpGet("Emballer")]
+    public async Task<IActionResult> GetAllEmballer()
+    {
+        //Appel de la logique métier
+        IEnumerable<Commande> commandes = await _commandeService.GetAllEmballerAsync();
+
+        //BO -> DTO Responses (LINQ sont des fonctions qui s'appliquent sur des collections)       
+        var items = commandes.Select(commandes => new GetCOmmandesItemDTOResponse()
+        {
+            Id = commandes.Id,
+            Statut = commandes.Statut,
+            NomUtilisateur = commandes.NomUtilisateur,
+            PrenomUtilisateur = commandes.PrenomUtilisateur
+        });
+
+        var response = new GetCommandesDtoResponse()
+        {
+            Items = items
+        };
+
+        //DTO Reponse + code HTTP 200
+        return Ok(response);
+    }
+
+
+    [AllowAnonymous]
     [HttpGet("Finalise")]
     public async Task<IActionResult> GetAllFinalise()
     {

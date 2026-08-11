@@ -31,6 +31,12 @@ public class LigneCommandeService : ILigneCommandeService
     {
         return await _db.LigneCommande.GetAllAttenteAsync();
     }
+
+    public async Task<IEnumerable<LigneCommande>> GetLigneCommandesEmballerAsync()
+    {
+        return await _db.LigneCommande.GetAllEmballerAsync();
+    }
+
     public async Task<IEnumerable<LigneCommande>> GetLigneCommandesEnvoieAsync()
     {
         return await _db.LigneCommande.GetAllEnvoieAsync();

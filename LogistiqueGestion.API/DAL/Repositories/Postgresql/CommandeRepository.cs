@@ -68,6 +68,23 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
         return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
     }
 
+    // récup commande à emballée
+    public async Task<IEnumerable<Commande>> GetAllEmballerAsync()
+    {
+        string query = @"SELECT 
+                            c.id,
+                            c.statut_commandes_id AS statut,
+                            u.nom AS NomUtilisateur,
+                            u.prenom AS PrenomUtilisateur 
+                        FROM commandes c
+                        join utilisateurs u on c.utilisateur_id = u.id 
+                    WHERE c.statut_commandes_id = 3
+                    ORDER BY c.id";
+
+        return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
+    }
+
+
 
     // récup comamnde finalisée
     public async Task<IEnumerable<Commande>> GetAllFinaliseAsync()
@@ -79,7 +96,7 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
                             u.prenom AS PrenomUtilisateur 
                         FROM commandes c
                         join utilisateurs u on c.utilisateur_id = u.id 
-                    WHERE c.statut_commandes_id = 3
+                    WHERE c.statut_commandes_id = 4
                     ORDER BY c.id";
 
         return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
@@ -95,11 +112,13 @@ public class CommandeRepositoryPostgresql : ICommandeRepository
                             u.prenom AS PrenomUtilisateur 
                         FROM commandes c
                         join utilisateurs u on c.utilisateur_id = u.id 
-                    WHERE c.statut_commandes_id = 4
+                    WHERE c.statut_commandes_id = 5
                     ORDER BY c.id";
 
         return await _db.Connection.QueryAsync<Commande>(query, transaction: _db.TransactionSql);
     }
+
+
 
     public async Task<Commande> GetAsync(int id)
     {

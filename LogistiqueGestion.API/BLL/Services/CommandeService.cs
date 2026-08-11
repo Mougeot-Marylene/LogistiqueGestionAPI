@@ -45,4 +45,9 @@ public class CommandeService : ICommandeService
         return await _db.Commande.GetAllPreparationAsync();
     }
 
+    public async Task<IEnumerable<Commande>> GetAllEmballerAsync()
+    {
+        return await _db.Commande.GetAllEmballerAsync();
+    }
+
 }

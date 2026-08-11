@@ -35,6 +35,13 @@ public interface ICommandeService
     public Task<IEnumerable<Commande>> GetAllPreparationAsync();
 
     /// <summary>
+    /// Récupèrer tous les commandes emballer
+    /// </summary>
+    /// <returns>Tous les commandes emballer </returns>
+    public Task<IEnumerable<Commande>> GetAllEmballerAsync();
+
+
+    /// <summary>
     /// Récupérer une commande par son id
     /// </summary>
     /// <returns>Commande par son id</returns>

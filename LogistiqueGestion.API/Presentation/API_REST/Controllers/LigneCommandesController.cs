@@ -78,6 +78,40 @@ public class LigneCommandesController : APIBaseController
         return Ok(response);
     }
 
+
+    [AllowAnonymous]
+    [HttpGet("Emballer")]
+    public async Task<IActionResult> GetAllEmballer()
+    {
+        IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesEmballerAsync();
+
+        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
+        {
+            Id = ligneCommandes.Id,
+            CommandeId = ligneCommandes.CommandeId,
+            ProduitId = ligneCommandes.ProduitId,
+            NomProduit = ligneCommandes.NomProduit,
+            Quantite = ligneCommandes.Quantite,
+            PrixTotal = ligneCommandes.PrixTotal,
+            EstRamasse = ligneCommandes.EstRamasse,
+            EstEmballe = ligneCommandes.EstEmballe,
+            NomClient = ligneCommandes.NomClient,
+            PrenomClient = ligneCommandes.PrenomClient,
+            // Format : dd-MM-yyyy
+            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
+
+        });
+
+        var response = new GetLigneCommandeDtoResponse()
+        {
+            Items = items
+        };
+
+        return Ok(response);
+    }
+
+
+
     [AllowAnonymous]
     [HttpGet("EnEnvoie")]
     public async Task<IActionResult> GetAllEnvoie()

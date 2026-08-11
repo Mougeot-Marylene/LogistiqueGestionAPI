@@ -27,6 +27,12 @@ public interface ILigneCommandeService
     public Task<IEnumerable<LigneCommande>> GetLigneCommandesAttenteAsync();
 
     /// <summary>
+    /// Récupèrer toutes les lignes commandes à emballer 
+    /// </summary>
+    /// <returns>Retourne toutes les lignes commandes à emballer </returns>
+    public Task<IEnumerable<LigneCommande>> GetLigneCommandesEmballerAsync();
+
+    /// <summary>
     /// Récupèrer toutes les lignes de commandes en envoie 
     /// </summary>
     /// <returns>Retourne toutes les lignes de commandes en envoie </returns>

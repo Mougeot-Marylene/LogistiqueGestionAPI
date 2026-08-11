@@ -9,4 +9,5 @@ public interface ICommandeRepository : IReadRepository<Commande, int>, IWriteRep
     Task<IEnumerable<Commande>> GetAllEnvoieAsync();
     Task<IEnumerable<Commande>> GetAllFinaliseAsync();
     Task<IEnumerable<Commande>> GetAllPreparationAsync();
+    Task<IEnumerable<Commande>> GetAllEmballerAsync();
 }

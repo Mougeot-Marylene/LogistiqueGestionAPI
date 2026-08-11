@@ -9,4 +9,5 @@ public interface ILigneCommandeRepository : IReadRepository<LigneCommande, int>,
     Task<IEnumerable<LigneCommande>> GetAllAttenteAsync();
     Task<IEnumerable<LigneCommande>> GetAllEnvoieAsync();
     Task<IEnumerable<LigneCommande>> GetAllFinaliseAsync();
+    Task<IEnumerable<LigneCommande>> GetAllEmballerAsync();
 }
