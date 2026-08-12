@@ -24,28 +24,9 @@ public class LigneCommandesController : APIBaseController
 	{
 		IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesAsync();
 
-		var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
-		{
-            Id = ligneCommandes.Id,
-			CommandeId = ligneCommandes.CommandeId,
-			ProduitId = ligneCommandes.ProduitId,
-			NomProduit = ligneCommandes.NomProduit,
-			Quantite = ligneCommandes.Quantite,
-            PrixTotal = ligneCommandes.PrixTotal,
-			EstRamasse = ligneCommandes.EstRamasse,
-            EstEmballe = ligneCommandes.EstEmballe,
-			NomClient = ligneCommandes.NomClient,
-			PrenomClient = ligneCommandes.PrenomClient,
-            // Format : dd-MM-yyyy
-            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
-        });
+        var response = MapperLigneCommandes(ligneCommandes);
 
-		var response = new GetLigneCommandeDtoResponse()
-		{
-			Items = items
-		};
-
-		return Ok(response);
+        return Ok(response);
     }
 
     [AllowAnonymous]
@@ -54,26 +35,7 @@ public class LigneCommandesController : APIBaseController
     {
         IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesAttenteAsync();
 
-        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
-        {
-            Id = ligneCommandes.Id,
-            CommandeId = ligneCommandes.CommandeId,
-            ProduitId = ligneCommandes.ProduitId,
-            NomProduit = ligneCommandes.NomProduit,
-            Quantite = ligneCommandes.Quantite,
-            PrixTotal = ligneCommandes.PrixTotal,
-            EstRamasse = ligneCommandes.EstRamasse,
-            EstEmballe = ligneCommandes.EstEmballe,
-            NomClient = ligneCommandes.NomClient,
-            PrenomClient = ligneCommandes.PrenomClient,
-            // Format : dd-MM-yyyy
-            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
-        });
-
-        var response = new GetLigneCommandeDtoResponse()
-        {
-            Items = items
-        };
+        var response = MapperLigneCommandes(ligneCommandes);
 
         return Ok(response);
     }
@@ -85,31 +47,22 @@ public class LigneCommandesController : APIBaseController
     {
         IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesEmballerAsync();
 
-        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
-        {
-            Id = ligneCommandes.Id,
-            CommandeId = ligneCommandes.CommandeId,
-            ProduitId = ligneCommandes.ProduitId,
-            NomProduit = ligneCommandes.NomProduit,
-            Quantite = ligneCommandes.Quantite,
-            PrixTotal = ligneCommandes.PrixTotal,
-            EstRamasse = ligneCommandes.EstRamasse,
-            EstEmballe = ligneCommandes.EstEmballe,
-            NomClient = ligneCommandes.NomClient,
-            PrenomClient = ligneCommandes.PrenomClient,
-            // Format : dd-MM-yyyy
-            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
-
-        });
-
-        var response = new GetLigneCommandeDtoResponse()
-        {
-            Items = items
-        };
+        var response = MapperLigneCommandes(ligneCommandes);
 
         return Ok(response);
     }
 
+
+    [AllowAnonymous]
+    [HttpGet("Finalise")]
+    public async Task<IActionResult> GetAlFinalise()
+    {
+        IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesFinaliseAsync();
+
+        var response = MapperLigneCommandes(ligneCommandes);
+
+        return Ok(response);
+    }
 
 
     [AllowAnonymous]
@@ -118,21 +71,28 @@ public class LigneCommandesController : APIBaseController
     {
         IEnumerable<LigneCommande> ligneCommandes = await _LigneCommandeService.GetLigneCommandesEnvoieAsync();
 
-        var items = ligneCommandes.Select(ligneCommandes => new GetLigneCommandeItemsDtoResponse()
-        {
-            Id = ligneCommandes.Id,
-            CommandeId = ligneCommandes.CommandeId,
-            ProduitId = ligneCommandes.ProduitId,
-            NomProduit = ligneCommandes.NomProduit,
-            Quantite = ligneCommandes.Quantite,
-            PrixTotal = ligneCommandes.PrixTotal,
-            EstRamasse = ligneCommandes.EstRamasse,
-            EstEmballe = ligneCommandes.EstEmballe,
-            NomClient = ligneCommandes.NomClient,
-            PrenomClient = ligneCommandes.PrenomClient,
-            // Format : dd-MM-yyyy
-            Date = ligneCommandes.Date.ToString("dd-MM-yyyy")
+        var response = MapperLigneCommandes(ligneCommandes);
 
+        return Ok(response);
+    }
+
+    private GetLigneCommandeDtoResponse MapperLigneCommandes(
+        IEnumerable<LigneCommande> ligneCommandes)
+    {
+        var items = ligneCommandes.Select(ligneCommande => new GetLigneCommandeItemsDtoResponse()
+        {
+            Id = ligneCommande.Id,
+            CommandeId = ligneCommande.CommandeId,
+            ProduitId = ligneCommande.ProduitId,
+            NomProduit = ligneCommande.NomProduit,
+            Quantite = ligneCommande.Quantite,
+            PrixTotal = ligneCommande.PrixTotal,
+            EstRamasse = ligneCommande.EstRamasse,
+            EstEmballe = ligneCommande.EstEmballe,
+            NomClient = ligneCommande.NomClient,
+            PrenomClient = ligneCommande.PrenomClient,
+            // Format : dd-MM-yyyy
+            Date = ligneCommande.Date.ToString("dd-MM-yyyy")
         });
 
         var response = new GetLigneCommandeDtoResponse()
@@ -140,9 +100,48 @@ public class LigneCommandesController : APIBaseController
             Items = items
         };
 
-        return Ok(response);
+        return response;
     }
 
+
+    [AllowAnonymous]
+    [HttpGet("Commande/{commandeId}")]
+    public async Task<IActionResult> GetLignesByCommandeIdAsync([FromRoute] int commandeId)
+    {
+        if (commandeId <= 0)
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            // On appelle la NOUVELLE méthode qui retourne IEnumerable<LigneCommande>
+            var lignes = await _LigneCommandeService.GetByCommandeIdAsync(commandeId);
+
+            var response = lignes.Select(ligne => new GetLigneCommandeItemsDtoResponse()
+            {
+                Id = ligne.Id,
+                CommandeId = ligne.CommandeId,
+                ProduitId = ligne.ProduitId,
+                NomProduit = ligne.NomProduit,
+                Quantite = ligne.Quantite,
+                PrixTotal = ligne.PrixTotal,
+                EstRamasse = ligne.EstRamasse,
+                NomClient = ligne.NomClient,
+                PrenomClient = ligne.PrenomClient,
+                Date = ligne.Date.ToString("dd-MM-yyyy")
+            });
+
+            return Ok(new GetLigneCommandeDtoResponse { Items = response });
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetLigneCommandeAsync([FromRoute] int id)
 	{

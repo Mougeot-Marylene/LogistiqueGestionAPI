@@ -20,6 +20,8 @@ public interface ILigneCommandeService
 
     public Task<LigneCommande> UpdateLigneCommandeAsync(LigneCommande ligneCommande);
 
+    Task<IEnumerable<LigneCommande>> GetByCommandeIdAsync(int commandeId);
+
     /// <summary>
     /// Récupèrer toutes les lignes de commandes en attente 
     /// </summary>

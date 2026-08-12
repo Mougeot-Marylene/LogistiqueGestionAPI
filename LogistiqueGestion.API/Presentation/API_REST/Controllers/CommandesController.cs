@@ -41,7 +41,8 @@ public class CommandesController : APIBaseController
         return Ok(response);
 	}
 
-	[HttpGet("{id}")]
+    [AllowAnonymous]
+    [HttpGet("{id}")]
 	public async Task<IActionResult> GetCommandeAsync([FromRoute]int id)
     {
         if (id <= 0)

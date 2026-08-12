@@ -37,14 +37,14 @@ public class LigneCommandeService : ILigneCommandeService
         return await _db.LigneCommande.GetAllEmballerAsync();
     }
 
-    public async Task<IEnumerable<LigneCommande>> GetLigneCommandesEnvoieAsync()
-    {
-        return await _db.LigneCommande.GetAllEnvoieAsync();
-    }
-
     public async Task<IEnumerable<LigneCommande>> GetLigneCommandesFinaliseAsync()
     {
         return await _db.LigneCommande.GetAllFinaliseAsync();
+    }
+
+    public async Task<IEnumerable<LigneCommande>> GetLigneCommandesEnvoieAsync()
+    {
+        return await _db.LigneCommande.GetAllEnvoieAsync();
     }
 
     public async Task<LigneCommande> UpdateLigneCommandeAsync(LigneCommande ligneCommande)
@@ -70,4 +70,8 @@ public class LigneCommandeService : ILigneCommandeService
         return ligneCommandeUpdate;
     }
 
+    public async Task<IEnumerable<LigneCommande>> GetByCommandeIdAsync(int commandeId)
+    {
+        return await _db.LigneCommande.GetByCommandeIdAsync(commandeId);
+    }
 }
